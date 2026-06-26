@@ -1,11 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TrailSync</title>
-</head>
-<body>
-
-<h1>Hello TrailSync 🚀</h1>
-
-</body>
-</html>
+{% extends 'layouts/base.html' %}
+{% block title %}
+Trail Sync
+{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1>
+                    Explore Beyond
+                    <br>
+                    The Mountains
+                </h1>
+                <p>
+                    Smart Trek Management Platform
+                </p>
+                <button class="btn btn-success btn-lg">
+                    Start Exploring
+                </button>
+            </div>
+            <div class="col-lg-6">
+                <img
+                    src="{{ url_for('static', filename='images/mountain.png') }}"
+                    class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
