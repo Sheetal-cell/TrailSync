@@ -42,6 +42,13 @@ class User(db.Model):
         foreign_keys="Trek.assigned_staff_id"
     )
 
+    staff_profile = db.relationship(
+        "StaffProfile",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan"
+    )
+
 
     def __repr__(self):
         return f"<User {self.full_name}>"
