@@ -2,3 +2,4 @@
 
 from .user import User
 from .trek import Trek
+from .booking import Booking
