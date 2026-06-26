@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from config import Config
 from app.extensions import db
+from app.models import User,Trek
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,7 @@ def create_app():
         return render_template("landing.html")
 
     with app.app_context():
+        print(db.Model.metadata.tables.keys())
         db.create_all()
 
     return app
