@@ -27,5 +27,21 @@ class User(db.Model):
         db.DateTime,
         default=datetime.utcnow
     )
+
+    # Relationships
+
+    bookings = db.relationship(
+        "Booking",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+
+    assigned_treks = db.relationship(
+        "Trek",
+        back_populates="assigned_staff",
+        foreign_keys="Trek.assigned_staff_id"
+    )
+
+
     def __repr__(self):
         return f"<User {self.full_name}>"

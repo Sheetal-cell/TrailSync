@@ -37,5 +37,17 @@ class Booking(db.Model):
         db.Float,
         default=0.0
     )
+
+    user = db.relationship(
+        "User",
+        back_populates="bookings"
+    )
+
+    trek = db.relationship(
+        "Trek",
+        back_populates="bookings"
+    )
+
+
     def __repr__(self):
         return f"<Booking #{self.id}>"

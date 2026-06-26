@@ -26,5 +26,18 @@ class Trek(db.Model):
         db.ForeignKey("users.id"),
         nullable=True
     )
+
+    assigned_staff = db.relationship(
+        "User",
+        back_populates="assigned_treks",
+        foreign_keys=[assigned_staff_id]
+    )
+
+    bookings = db.relationship(
+        "Booking",
+        back_populates="trek",
+        cascade="all, delete-orphan"
+    )
+
     def __repr__(self):
         return f"<Trek {self.trek_name}>"
