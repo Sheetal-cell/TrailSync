@@ -1,0 +1,89 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled Python files
+*.so
+
+# ===========================
+# Virtual Environments
+# ===========================
+venv/
+.venv/
+ENV/
+env/
+
+# ===========================
+# VS Code
+# ===========================
+.vscode/
+
+# ===========================
+# PyCharm
+# ===========================
+.idea/
+
+# ===========================
+# OS Files
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================
+# Environment Variables
+# ===========================
+.env
+
+# ===========================
+# Flask
+# ===========================
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+
+# ===========================
+# SQLAlchemy / Migrations
+# ===========================
+*.db-journal
+
+# ===========================
+# Logs
+# ===========================
+*.log
+
+# ===========================
+# Python Packaging
+# ===========================
+build/
+dist/
+*.egg-info/
+
+# ===========================
+# Cache
+# ===========================
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ===========================
+# Uploaded Files
+# ===========================
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+# ===========================
+# Generated QR Codes
+# ===========================
+app/static/qr/*
+!app/static/qr/.gitkeep
+
+# ===========================
+# Temporary Files
+# ===========================
+*.tmp
+*.temp
