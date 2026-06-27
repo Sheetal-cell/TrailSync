@@ -1,15 +1,143 @@
 {% extends "layouts/dashboard_base.html" %}
-{% block title %}
-Admin Dashboard
-{% endblock %}
-{% block content %}
 
-<div class="container py-5">
-    <h1 class="display-4 fw-bold">
-        Welcome Organizers
-    </h1>
-    <p class="lead">
-        Dashboard coming in the next step...
-    </p>
+{% block title %}
+Staff Dashboard
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="#">
+    <i class="bi bi-speedometer2"></i>
+    Dashboard
+</a>
+
+<a href="#">
+    <i class="bi bi-map"></i>
+    Assigned Treks
+</a>
+
+<a href="#">
+    <i class="bi bi-people"></i>
+    Participants
+</a>
+
+<a href="#">
+    <i class="bi bi-pencil-square"></i>
+    Update Trek
+</a>
+
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="dashboard-header">
+
+<div>
+
+<h2>
+
+Welcome,
+
+{{ current_user.full_name }}
+
+</h2>
+
+<p>
+
+Manage your assigned treks efficiently.
+
+</p>
+
 </div>
+
+</div>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="stat-number">
+
+0
+
+</div>
+
+<div class="stat-title">
+
+Assigned Treks
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="stat-number">
+
+0
+
+</div>
+
+<div class="stat-title">
+
+Participants
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="stat-number">
+
+0
+
+</div>
+
+<div class="stat-title">
+
+Completed Treks
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="quick-card">
+
+<h3>
+
+Today's Tasks
+
+</h3>
+
+<hr>
+
+<p>
+
+• View Assigned Treks</p>
+
+<p>
+
+• Update Trek Status</p>
+
+<p>
+
+• Manage Participants</p>
+
+</div>
+
 {% endblock %}

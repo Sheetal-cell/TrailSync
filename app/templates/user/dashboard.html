@@ -1,17 +1,142 @@
 {% extends "layouts/dashboard_base.html" %}
+
 {% block title %}
-Admin Dashboard
+Trekker Dashboard
 {% endblock %}
-{% block content %}
 
-<div class="container py-5">
+{% block sidebar %}
 
-    <h1 class="display-4 fw-bold">
-        Welcome Trekker
-    </h1>
-    <p class="lead">
-        Dashboard coming in the next step...
-    </p>
+<a href="#">
+    <i class="bi bi-speedometer2"></i>
+    Dashboard
+</a>
+
+<a href="#">
+    <i class="bi bi-map"></i>
+    Explore Treks
+</a>
+
+<a href="#">
+    <i class="bi bi-journal-check"></i>
+    My Bookings
+</a>
+
+<a href="#">
+    <i class="bi bi-clock-history"></i>
+    Trek History
+</a>
+
+<a href="#">
+    <i class="bi bi-person"></i>
+    Profile
+</a>
+
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="dashboard-header">
+
+<div>
+
+<h2>
+
+Welcome,
+
+{{ current_user.full_name }}
+
+</h2>
+
+<p>
+
+Ready for your next adventure?
+
+</p>
 
 </div>
+
+</div>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="stat-number">
+
+0
+
+</div>
+
+<div class="stat-title">
+
+Booked Treks
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="stat-number">
+
+0
+
+</div>
+
+<div class="stat-title">
+
+Completed
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="stat-number">
+
+0
+
+</div>
+
+<div class="stat-title">
+
+Upcoming
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="quick-card">
+
+<h3>
+
+Adventure Awaits
+
+</h3>
+
+<hr>
+
+<p>
+
+Search, book and experience exciting trekking adventures.
+
+</p>
+
+</div>
+
 {% endblock %}

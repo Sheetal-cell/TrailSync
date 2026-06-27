@@ -27,6 +27,18 @@ from app.utils.security import (
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
 
+    from flask_login import current_user
+
+    if current_user.is_authenticated:
+
+        if current_user.role == "ADMIN":
+            return redirect(url_for("admin.dashboard"))
+
+        elif current_user.role == "STAFF":
+            return redirect(url_for("staff.dashboard"))
+
+        return redirect(url_for("user.dashboard"))
+
     form = LoginForm()
     if form.validate_on_submit():
 
@@ -108,6 +120,18 @@ def login():
 # -----------------------------
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
+
+    from flask_login import current_user
+
+    if current_user.is_authenticated:
+
+        if current_user.role == "ADMIN":
+            return redirect(url_for("admin.dashboard"))
+
+        elif current_user.role == "STAFF":
+            return redirect(url_for("staff.dashboard"))
+
+        return redirect(url_for("user.dashboard"))
     form = RegistrationForm()
     if form.validate_on_submit():
 
