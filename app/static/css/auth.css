@@ -1,0 +1,65 @@
+body{
+
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+    background:url("../images/mountain.jpg") center center/cover no-repeat fixed;
+}
+
+.auth-overlay{
+    min-height:100vh;
+    background:linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(8,20,40,.75)
+    );
+}
+.auth-card{
+
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(18px);
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    padding:45px;
+}
+
+.form-control,
+.form-select{
+
+    border-radius:14px;
+    border:none;
+    padding:14px;
+    background:rgba(255,255,255,.9);
+
+}
+
+.form-control:focus,
+.form-select:focus{
+    box-shadow:0 0 0 .25rem rgba(25,135,84,.25);
+}
+
+.auth-btn{
+    background:linear-gradient(
+        135deg,
+        #16a34a,
+        #15803d
+    );
+    border:none;
+    color:white;
+
+}
+
+.auth-btn:hover{
+
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+}
+.auth-card h2{
+    letter-spacing:.5px;
+}
+a{
+    transition:.3s;
+}
+a:hover{
+    color:#ffffff !important;
+}

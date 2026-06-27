@@ -1,9 +1,74 @@
-{% extends "base.html" %}
+{% extends "auth/layout.html" %}
 {% block title %}
-Register
+Register | TrailSync
 {% endblock %}
-{% block content %}
-<div class="container py-5">
-<h2>Register Page</h2>
+{% block auth_content %}
+<div class="text-center mb-4">
+    <h2 class="fw-bold text-white">
+        Join TrailSync
+    </h2>
+    <p class="text-light">
+        Start your trekking journey today.
+    </p>
+</div>
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.full_name(
+            class="form-control form-control-lg",
+            placeholder="Full Name"
+        ) }}
+
+    </div>
+    <div class="mb-3">
+
+        {{ form.email(
+            class="form-control form-control-lg",
+            placeholder="Email"
+        ) }}
+
+    </div>
+    <div class="mb-3">
+        {{ form.phone(
+            class="form-control form-control-lg",
+            placeholder="Phone Number"
+        ) }}
+    </div>
+    <div class="mb-3">
+        {{ form.role(
+            class="form-select form-select-lg"
+        ) }}
+    </div>
+    <div class="mb-3">
+        {{ form.password(
+            class="form-control form-control-lg",
+            placeholder="Password"
+        ) }}
+    </div>
+    <div class="mb-4">
+
+        {{ form.confirm_password(
+            class="form-control form-control-lg",
+            placeholder="Confirm Password"
+        ) }}
+
+    </div>
+    <div class="d-grid">
+
+        {{ form.submit(
+            class="btn btn-success btn-lg auth-btn"
+        ) }}
+    </div>
+</form>
+<div class="text-center mt-4">
+    <small class="text-light">
+        Already registered?
+
+        <a href="{{ url_for('auth.login') }}"
+           class="text-warning fw-semibold text-decoration-none">
+            Login
+        </a>
+    </small>
 </div>
 {% endblock %}
