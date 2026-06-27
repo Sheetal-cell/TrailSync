@@ -1,28 +1,43 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 {% block title %}
 Trail Sync
 {% endblock %}
 {% block content %}
-<section class="hero">
+<section class="hero py-5">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center min-vh-75">
+            <!-- Left Side -->
             <div class="col-lg-6">
-                <h1>
+                <span class="badge bg-success mb-3 px-3 py-2">
+                    Adventure Starts Here
+                </span>
+                <h1 class="display-3 fw-bold">
                     Explore Beyond
                     <br>
                     The Mountains
                 </h1>
-                <p>
-                    Smart Trek Management Platform
+                <p class="lead text-muted my-4">
+                    Plan, manage and experience unforgettable trekking
+                    adventures with Trail Sync — an intelligent trekking
+                    management platform for trekkers, staff and organizers.
                 </p>
-                <button class="btn btn-success btn-lg">
-                    Start Exploring
-                </button>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('auth.register') }}"
+                       class="btn btn-success btn-lg px-4">
+                        Start Exploring
+                    </a>
+                    <a href="{{ url_for('auth.login') }}"
+                       class="btn btn-outline-success btn-lg px-4">
+                        Login
+                    </a>
+                </div>
             </div>
-            <div class="col-lg-6">
+            <!-- Right Side -->
+            <div class="col-lg-6 text-center">
                 <img
-                    src="{{ url_for('static', filename='images/mountain.png') }}"
-                    class="img-fluid">
+                    src="{{ url_for('static', filename='images/mountain.jpg') }}"
+                    class="img-fluid hero-image"
+                    alt="Mountain">
             </div>
         </div>
     </div>

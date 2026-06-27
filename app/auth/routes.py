@@ -1,25 +1,29 @@
-from flask import render_template
-from app.auth import auth_bp
 from flask import (
     render_template,
     redirect,
     url_for,
     flash
 )
+from flask_login import (
+    login_user,
+    logout_user,
+    login_required
+)
+from app.auth import auth_bp
 from app.auth.forms import (
     RegistrationForm,
     LoginForm
 )
-from app.models import User
 from app.extensions import db
+from app.models import User
 from app.utils.security import (
     hash_password,
     verify_password
 )
-from flask_login import (
-    login_user,
-    logout_user
-)
+
+# -----------------------------
+# Login
+# -----------------------------
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
 
@@ -30,53 +34,80 @@ def login():
             email=form.email.data
         ).first()
 
+        # User not found
         if not user:
             flash(
-                "Invalid credentials.",
+                "Invalid email or password.",
                 "danger"
             )
             return redirect(
                 url_for("auth.login")
             )
+        # Password check
         if not verify_password(
             user.password,
             form.password.data
         ):
             flash(
-                "Invalid credentials.",
+                "Invalid email or password.",
                 "danger"
             )
             return redirect(
                 url_for("auth.login")
             )
+        # Blacklisted / Deactivated account
+        if not user.is_active:
+            flash(
+                "Your account has been deactivated by the administrator.",
+                "danger"
+            )
+            return redirect(
+                url_for("auth.login")
+            )
+        # Staff approval check
+        if (
+            user.role == "STAFF"
+            and user.status != "APPROVED"
+        ):
+            flash(
+                "Your account is awaiting admin approval.",
+                "warning"
+            )
+            return redirect(
+                url_for("auth.login")
+            )
 
-        if user.role == "STAFF":
-            if user.status != "APPROVED":
-                flash(
-                    "Your account is awaiting admin approval.",
-                    "warning"
-                )
-                return redirect(
-                    url_for("auth.login")
-                )
+        # Login successful
         login_user(user)
 
+        flash(
+            f"Welcome back, {user.full_name}!",
+            "success"
+        )
+        # Redirect based on role
         if user.role == "ADMIN":
-            return redirect("/admin")
-
+            return redirect(
+                url_for("admin.dashboard")
+            )
         elif user.role == "STAFF":
-            return redirect("/staff")
+            return redirect(
+                url_for("staff.dashboard")
+            )
 
-        return redirect("/user")
-
+        else:
+            return redirect(
+                url_for("user.dashboard")
+            )
     return render_template(
         "auth/login.html",
         form=form
     )
 
+# -----------------------------
+# Register
+# -----------------------------
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
-
     form = RegistrationForm()
     if form.validate_on_submit():
 
@@ -85,20 +116,21 @@ def register():
         ).first()
 
         if existing_user:
+
             flash(
-                "Email already exists.",
+                "An account with this email already exists.",
                 "danger"
             )
             return redirect(
                 url_for("auth.register")
             )
+        # Staff require admin approval
         status = (
             "PENDING"
             if form.role.data == "STAFF"
             else "APPROVED"
         )
-        user = User(
-
+        new_user = User(
             full_name=form.full_name.data,
             email=form.email.data,
             phone=form.phone.data,
@@ -108,13 +140,18 @@ def register():
             role=form.role.data,
             status=status
         )
-
-        db.session.add(user)
+        db.session.add(new_user)
         db.session.commit()
-        flash(
-            "Registration Successful!",
-            "success"
-        )
+        if form.role.data == "STAFF":
+            flash(
+                "Registration successful! Your account is awaiting admin approval.",
+                "info"
+            )
+        else:
+            flash(
+                "Registration successful! Please login to continue.",
+                "success"
+            )
         return redirect(
             url_for("auth.login")
         )
@@ -123,14 +160,18 @@ def register():
         form=form
     )
 
+# -----------------------------
+# Logout
+# -----------------------------
 @auth_bp.route("/logout")
+@login_required
 def logout():
 
     logout_user()
-
     flash(
         "Logged out successfully.",
         "success"
     )
-
-    return redirect("/")
+    return redirect(
+        url_for("auth.login")
+    )
