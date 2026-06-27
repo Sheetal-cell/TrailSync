@@ -125,3 +125,179 @@ transform:none;
 }
 
 }
+
+/* ===========================
+   STATISTICS CARDS
+=========================== */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+    margin-bottom:35px;
+}
+
+.stat-card{
+
+    background:linear-gradient(
+        145deg,
+        #20293a,
+        #293447
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    padding:28px;
+    color:white;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+
+}
+
+.stat-card::before{
+
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:rgba(32,208,151,.12);
+    border-radius:50%;
+    right:-70px;
+    top:-70px;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-8px);
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+
+}
+
+.stat-icon{
+
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:rgba(46,204,113,.15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#30d095;
+    font-size:24px;
+    margin-bottom:18px;
+
+}
+
+.stat-title{
+
+    color:#b8c3d1;
+    font-size:15px;
+
+}
+
+.stat-value{
+
+    font-size:42px;
+    font-weight:700;
+    margin-top:10px;
+
+}
+
+.stat-sub{
+
+    color:#30d095;
+    margin-top:8px;
+    font-size:15px;
+
+}
+
+.activity-card{
+
+    background:#20293a;
+    border-radius:22px;
+    padding:28px;
+    color:white;
+    height:100%;
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.activity-item{
+
+    display:flex;
+    gap:18px;
+    margin:25px 0;
+    align-items:flex-start;
+
+}
+
+.activity-icon{
+
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#2ecc71;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.activity-title{
+    font-weight:600;
+}
+
+.activity-time{
+
+    color:#9aa6b2;
+    font-size:14px;
+
+}
+
+.quick-actions{
+
+    background:#20293a;
+    padding:30px;
+    border-radius:22px;
+    margin-top:30px;
+
+}
+
+.action-btn{
+
+    border:none;
+    padding:14px 25px;
+    border-radius:14px;
+    font-weight:600;
+    margin-right:15px;
+    transition:.3s;
+
+}
+
+.action-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.green{
+
+    background:#1fbf75;
+    color:white;
+
+}
+
+.blue{
+
+    background:#2979ff;
+    color:white;
+
+}
+
+.orange{
+
+    background:#ffb020;
+}
