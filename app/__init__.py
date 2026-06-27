@@ -5,6 +5,9 @@ from app.models import User,Trek
 from app.services.seed import create_admin
 from app.extensions import login_manager
 from app.auth import auth_bp
+from app.admin import admin_bp
+from app.staff import staff_bp
+from app.user import user_bp
 
 def create_app():
     app = Flask(__name__)
@@ -12,7 +15,7 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
-    
+
 
     @app.route("/")
     def home():
@@ -25,6 +28,9 @@ def create_app():
         create_admin()
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(staff_bp)
+    app.register_blueprint(user_bp)
 
     return app
 
