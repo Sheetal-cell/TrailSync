@@ -1,82 +1,102 @@
 {% extends "layouts/dashboard_base.html" %}
-
-{% block page_title %}
+{% block title %}
 Admin Dashboard
 {% endblock %}
-
 {% block sidebar %}
+
 <a href="#">
-    Dashboard
+<i class="bi bi-speedometer2"></i>
+Dashboard
+</a>
+<a href="#">
+<i class="bi bi-map"></i>
+Treks
+</a>
+<a href="#">
+<i class="bi bi-people"></i>
+Users
+</a>
+<a href="#">
+<i class="bi bi-person-workspace"></i>
+Staff
 </a>
 
 <a href="#">
-    Treks
+<i class="bi bi-journal-check"></i>
+Bookings
 </a>
 
-<a href="#">
-    Staff
-</a>
-
-<a href="#">
-    Users
-</a>
-
-<a href="#">
-    Bookings
-</a>
 {% endblock %}
 {% block dashboard_content %}
 
-<div class="row">
-    <div class="col-md-3">
-        <div class="stat-card">
-            <div class="stat-number">
+<div class="dashboard-header">
+<div>
+<h1>
+Welcome,
+{{ current_user.full_name }}
+</h1>
+<p>
+System Overview
 
-                {{ total_treks }}
-            </div>
+</p>
 
-            <div class="stat-title">
-
-                Total Treks
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="stat-card">
-            <div class="stat-number">
-                {{ total_users }}
-            </div>
-
-            <div class="stat-title">
-
-                Users
-            </div>
-        </div>
-
-    </div>
-    <div class="col-md-3">
-        <div class="stat-card">
-            <div class="stat-number">
-                {{ total_staff }}
-
-            </div>
-            <div class="stat-title">
-
-                Staff
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="stat-card">
-            <div class="stat-number">
-                {{ total_bookings }}
-            </div>
-            <div class="stat-title">
-                Bookings
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+<div class="row g-4">
+<div class="col-lg-3">
+<div class="stat-card">
+<div class="stat-number">
+{{ total_treks }}
+</div>
+<div class="stat-title">
+Treks
+</div>
+</div>
+</div>
+<div class="col-lg-3">
+<div class="stat-card">
+<div class="stat-number">
+{{ total_users }}
+</div>
+<div class="stat-title">
+Users
+</div>
+</div>
+</div>
+<div class="col-lg-3">
+<div class="stat-card">
+<div class="stat-number">
+{{ total_staff }}
+</div>
+<div class="stat-title">
+Staff
+</div>
+</div>
+</div>
+<div class="col-lg-3">
+<div class="stat-card">
+<div class="stat-number">
+{{ total_bookings }}
+</div>
+<div class="stat-title">
+Bookings
+</div>
+</div>
+</div>
+</div>
+<div class="quick-card">
+<h3>
+ Quick Actions
+</h3>
+<hr>
+<button class="btn btn-success">
+Create Trek
+</button>
+<button class="btn btn-primary">
+Approve Staff
+</button>
+<button class="btn btn-warning">
+View Reports
+</button>
 </div>
 {% endblock %}
