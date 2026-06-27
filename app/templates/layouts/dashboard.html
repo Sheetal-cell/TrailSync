@@ -1,0 +1,47 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-2 dashboard-sidebar">
+            <div class="py-4 text-center">
+                <h3 class="fw-bold">
+                    Trail Sync
+
+                </h3>
+                <hr>
+                <div class="mb-4">
+                    <h5>
+                        {{ current_user.full_name }}
+                    </h5>
+                    <small>
+                        {{ current_user.role }}
+                    </small>
+                </div>
+                {% block sidebar %}
+                {% endblock %}
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="col-lg-10 dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <h2>
+                        {% block page_title %}
+                        Dashboard
+                        {% endblock %}
+                    </h2>
+                </div>
+                <div>
+                    <a href="{{ url_for('auth.logout') }}"
+                       class="btn btn-danger">
+                        Logout
+                    </a>
+                </div>
+            </div>
+            {% block dashboard_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,18 +1,82 @@
-{% extends "layouts/base.html" %}
-{% block title %}
+{% extends "layouts/dashboard_base.html" %}
+
+{% block page_title %}
 Admin Dashboard
 {% endblock %}
 
-{% block content %}
+{% block sidebar %}
+<a href="#">
+    Dashboard
+</a>
 
-<div class="container py-5">
+<a href="#">
+    Treks
+</a>
 
-    <h1 class="display-4 fw-bold">
-        Welcome Admin 
-    </h1>
-    <p class="lead">
-        Dashboard coming in the next step...
-    </p>
+<a href="#">
+    Staff
+</a>
+
+<a href="#">
+    Users
+</a>
+
+<a href="#">
+    Bookings
+</a>
+{% endblock %}
+{% block dashboard_content %}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">
+
+                {{ total_treks }}
+            </div>
+
+            <div class="stat-title">
+
+                Total Treks
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">
+                {{ total_users }}
+            </div>
+
+            <div class="stat-title">
+
+                Users
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">
+                {{ total_staff }}
+
+            </div>
+            <div class="stat-title">
+
+                Staff
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-number">
+                {{ total_bookings }}
+            </div>
+            <div class="stat-title">
+                Bookings
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock %}
