@@ -1,0 +1,75 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+All Treks
+{% endblock %}
+
+{% block heading %}
+All Treks
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="{{ url_for('admin.dashboard') }}">
+    <i class="bi bi-grid"></i>
+    Dashboard
+</a>
+
+<a class="active-menu" href="{{ url_for('admin.all_treks') }}">
+    <i class="bi bi-map"></i>
+    Treks
+</a>
+
+<a href="#">
+    <i class="bi bi-people"></i>
+    Users
+</a>
+
+<a href="#">
+    <i class="bi bi-person-workspace"></i>
+    Staff
+</a>
+
+<a href="#">
+    <i class="bi bi-journal-check"></i>
+    Bookings
+</a>
+
+{% endblock %}
+{% block dashboard_content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>All Treks</h2>
+    <a
+        href="{{ url_for('admin.create_trek') }}"
+        class="btn btn-success">
+
+        + Create Trek
+    </a>
+</div>
+
+<table class="table table-hover bg-white shadow rounded">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Location</th>
+<th>Difficulty</th>
+<th>Slots</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+{% for trek in treks %}
+<tr>
+<td>{{ trek.id }}</td>
+<td>{{ trek.trek_name }}</td>
+<td>{{ trek.location }}</td>
+<td>{{ trek.difficulty }}</td>
+<td>{{ trek.available_slots }}</td>
+<td>{{ trek.status }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
