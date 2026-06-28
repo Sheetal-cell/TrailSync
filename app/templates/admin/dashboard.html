@@ -10,11 +10,32 @@ Admin Dashboard
 
 {% block sidebar %}
 
-<a href="#"><i class="bi bi-house"></i> Dashboard</a>
-<a href="#"><i class="bi bi-map"></i> Treks</a>
-<a href="#"><i class="bi bi-people"></i> Users</a>
-<a href="#"><i class="bi bi-person-workspace"></i> Staff</a>
-<a href="#"><i class="bi bi-journal-check"></i> Bookings</a>
+<a class="active-menu"
+   href="{{ url_for('admin.dashboard') }}">
+    <i class="bi bi-grid"></i>
+    Dashboard
+</a>
+
+<a href="#">
+    <i class="bi bi-map"></i>
+    Treks
+</a>
+
+<a href="#">
+    <i class="bi bi-people"></i>
+    Users
+</a>
+
+<a href="#">
+    <i class="bi bi-person-workspace"></i>
+    Staff
+</a>
+
+<a href="#">
+    <i class="bi bi-journal-check"></i>
+    Bookings
+</a>
+
 {% endblock %}
 {% block dashboard_content %}
 

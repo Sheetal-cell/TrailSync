@@ -67,26 +67,48 @@ Logout
 <div class="main-content">
 
 <div class="topbar">
-<div>
-<h3>
-{% block heading %}
 
-Dashboard
+    <div>
 
-{% endblock %}
+        <h2 class="page-title">
+            {% block heading %}
+            Dashboard
+            {% endblock %}
+        </h2>
 
-</h3>
+        <p class="page-subtitle">
+            Welcome back,
+            {{ current_user.full_name }}
+        </p>
+    </div>
+    <div class="top-right">
 
-</div>
+        <div class="search-container">
+            <i class="bi bi-search"></i>
+            <input
+                type="text"
+                placeholder="Search anything...">
+        </div>
+        <button class="notification-btn">
+            <i class="bi bi-bell"></i>
+            <span class="notification-dot"></span>
+        </button>
+        <div class="profile-menu">
+            <div class="profile-avatar">
 
-<div>
+                {{ current_user.full_name[0] }}
 
-<input
-class="search-box"
-placeholder="Search...">
-
-</div>
-
+            </div>
+            <div>
+                <strong>
+                    {{ current_user.full_name }}
+                </strong>
+                <small>
+                    {{ current_user.role }}
+                </small>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="page-content">
@@ -98,6 +120,7 @@ placeholder="Search...">
 </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
