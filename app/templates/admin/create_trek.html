@@ -1,0 +1,71 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Create Trek
+{% endblock %}
+
+{% block heading %}
+Create Trek
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="card shadow-lg border-0 p-4">
+
+<form method="POST">
+
+{{ form.hidden_tag() }}
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+{{ form.trek_name.label(class="form-label") }}
+{{ form.trek_name(class="form-control") }}
+</div>
+
+<div class="col-md-6 mb-3">
+{{ form.location.label(class="form-label") }}
+{{ form.location(class="form-control") }}
+</div>
+
+<div class="col-md-6 mb-3">
+{{ form.difficulty.label(class="form-label") }}
+{{ form.difficulty(class="form-select") }}
+</div>
+
+<div class="col-md-6 mb-3">
+{{ form.duration.label(class="form-label") }}
+{{ form.duration(class="form-control") }}
+</div>
+
+<div class="col-md-6 mb-3">
+{{ form.available_slots.label(class="form-label") }}
+{{ form.available_slots(class="form-control") }}
+</div>
+
+<div class="col-md-6 mb-3">
+{{ form.start_date.label(class="form-label") }}
+{{ form.start_date(class="form-control") }}
+</div>
+
+<div class="col-md-6 mb-3">
+{{ form.end_date.label(class="form-label") }}
+{{ form.end_date(class="form-control") }}
+</div>
+
+<div class="col-12 mb-3">
+{{ form.description.label(class="form-label") }}
+{{ form.description(class="form-control", rows=5) }}
+</div>
+
+<div class="text-end">
+{{ form.submit(class="btn btn-success btn-lg") }}
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

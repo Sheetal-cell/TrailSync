@@ -1,5 +1,12 @@
-from flask import render_template
+from flask import (
+    render_template,
+    redirect,
+    url_for,
+    flash
+)
 from flask_login import login_required, current_user
+from app.admin.forms import TrekForm
+from app.extensions import db
 
 from app.admin import admin_bp
 from app.models import (
@@ -40,11 +47,45 @@ def dashboard():
         total_bookings=total_bookings
     )
 
-@admin_bp.route("/treks/create")
+@admin_bp.route("/treks/create", methods=["GET", "POST"])
 @login_required
 def create_trek():
-    return "<h2>Create Trek Page - Coming Soon</h2>"
 
+    if current_user.role != "ADMIN":
+        return "Unauthorized", 403
+
+    form = TrekForm()
+
+    if form.validate_on_submit():
+
+        trek = Trek(
+            trek_name=form.trek_name.data,
+            location=form.location.data,
+            difficulty=form.difficulty.data,
+            duration=form.duration.data,
+            available_slots=form.available_slots.data,
+            start_date=form.start_date.data,
+            end_date=form.end_date.data,
+            description=form.description.data,
+            status="OPEN"
+        )
+
+        db.session.add(trek)
+        db.session.commit()
+
+        flash(
+            "Trek created successfully!",
+            "success"
+        )
+
+        return redirect(
+            url_for("admin.all_treks")
+        )
+
+    return render_template(
+        "admin/create_trek.html",
+        form=form
+    )
 
 @admin_bp.route("/staff")
 @login_required
@@ -56,3 +97,16 @@ def staff_requests():
 @login_required
 def reports():
     return "<h2>Reports Page - Coming Soon</h2>"
+
+@admin_bp.route("/treks")
+@login_required
+def all_treks():
+
+    treks = Trek.query.order_by(
+        Trek.start_date
+    ).all()
+
+    return render_template(
+        "admin/all_treks.html",
+        treks=treks
+    )
