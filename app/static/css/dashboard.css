@@ -24,13 +24,24 @@ color:white;
 
 .sidebar{
 
-width:260px;
-background:#1b2330;
+width:280px;
+
+background:linear-gradient(
+180deg,
+#172033,
+#111827
+);
+
 padding:30px;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
-border-right:1px solid rgba(255,255,255,.08);
+border-right:1px solid rgba(255,255,255,.05);
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+overflow-y:auto;
 
 }
 
@@ -43,37 +54,88 @@ margin-bottom:40px;
 
 .profile{
 
+background:rgba(255,255,255,.05);
+padding:22px;
+border-radius:22px;
 text-align:center;
 margin-bottom:30px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.06);
 
 }
 
 .avatar{
 
-width:90px;
-height:90px;
-margin:auto;
-background:#14b86a;
+width:95px;
+height:95px;
 border-radius:50%;
+background:linear-gradient(
+135deg,
+#17c37b,
+#11a56b
+);
+
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 font-size:34px;
 font-weight:700;
+margin:auto;
 margin-bottom:15px;
+color:white;
+box-shadow:0 20px 35px rgba(23,195,123,.3);
 
 }
 
 .sidebar a{
 
-display:block;
-padding:14px;
-margin:10px 0;
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+padding:15px 18px;
+
+border-radius:16px;
+
+color:#d1d5db;
+
+font-weight:500;
+
 text-decoration:none;
 
-color:white;
-border-radius:12px;
+margin-bottom:10px;
+
 transition:.3s;
+
+}
+
+.sidebar a i{
+
+font-size:20px;
+
+width:25px;
+
+}
+
+.sidebar a:hover{
+
+background:rgba(23,195,123,.15);
+color:white;
+transform:translateX(6px);
+
+}
+
+.active-menu{
+background:linear-gradient(
+90deg,
+#17c37b,
+#13b96f
+);
+
+color:white !important;
+box-shadow:0 15px 30px rgba(23,195,123,.25);
 
 }
 
@@ -132,6 +194,39 @@ transform:none;
 
 }
 
+.hero-banner{
+background:
+
+linear-gradient(
+135deg,
+rgba(23,195,123,.95),
+rgba(9,84,57,.95)
+),
+
+url("../images/mountain.jpg");
+
+background-size:cover;
+background-position:center;
+border-radius:28px;
+padding:50px;
+color:white;
+margin-bottom:35px;
+box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+}
+
+.hero-banner h1{
+
+font-size:42px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.hero-banner p{
+font-size:18px;
+opacity:.9;
+
+}
 /* ===========================
    STATISTICS CARDS
 =========================== */
@@ -145,21 +240,32 @@ transform:none;
 
 .stat-card{
 
-    background:linear-gradient(
-        145deg,
-        #20293a,
-        #293447
-    );
+background:white;
+border-radius:24px;
+padding:30px;
+position:relative;
+overflow:hidden;
+transition:.35s;
+box-shadow:0 15px 30px rgba(0,0,0,.06);
 
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:22px;
-    padding:28px;
-    color:white;
-    transition:.35s;
-    position:relative;
-    overflow:hidden;
-    cursor:pointer;
+}
 
+.stat-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.stat-card::after{
+
+content:"";
+position:absolute;
+width:140px;
+height:140px;
+background:rgba(23,195,123,.08);
+border-radius:50%;
+right:-60px;
+top:-60px;
 }
 
 .stat-card::before{
@@ -217,6 +323,30 @@ transform:none;
     color:#30d095;
     margin-top:8px;
     font-size:15px;
+
+}
+
+.stat-title{
+
+color:#6b7280;
+
+}
+
+.stat-value{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#111827;
+
+}
+
+.stat-sub{
+
+color:#17c37b;
+
+font-weight:500;
 
 }
 
@@ -459,3 +589,62 @@ box-shadow:0 10px 25px rgba(24,185,125,.3);
 
 }
 
+/* 
+   LOGO
+ */
+
+.logo-section{
+
+display:flex;
+align-items:center;
+gap:16px;
+margin-bottom:45px;
+
+}
+
+.logo-circle{
+
+width:60px;
+height:60px;
+border-radius:18px;
+background:linear-gradient(
+135deg,
+#17c37b,
+#0ea86a
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:26px;
+color:white;
+box-shadow:0 15px 35px rgba(23,195,123,.35);
+
+}
+
+.logo-text{
+
+margin:0;
+font-size:24px;
+font-weight:700;
+
+}
+
+.logo-subtitle{
+
+font-size:13px;
+color:#9ca3af;
+letter-spacing:1px;
+text-transform:uppercase;
+
+}
+
+.main-content{
+
+margin-left:280px;
+padding:35px;
+flex:1;
+background:#edf3f8;
+min-height:100vh;
+
+}

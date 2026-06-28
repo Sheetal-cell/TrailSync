@@ -38,7 +38,20 @@ Admin Dashboard
 
 {% endblock %}
 {% block dashboard_content %}
+<div class="hero-banner">
 
+    <div>
+        <h1>
+
+            Welcome,
+            {{ current_user.full_name }}
+
+        </h1>
+        <p>
+            Manage treks, staff, users and bookings from one place.
+        </p>
+    </div>
+</div>
 <div class="stats-grid">
 
 <div class="stat-card">
