@@ -166,7 +166,42 @@ Confirmed
 
 </div>
 
+<div class="stat-card">
+
+    <div class="stat-icon">
+
+        <i class="bi bi-person-fill-exclamation"></i>
+    </div>
+
+    <div class="stat-title">
+
+        Pending Staff
+    </div>
+
+    <div class="stat-value">
+
+        {{ pending_staff }}
+    </div>
+
+    <div class="stat-sub">
+        Awaiting Approval
+
+    </div>
 </div>
+
+</div>
+{% if total_treks == 0 %}
+
+<div class="alert alert-info mt-4">
+
+    <h5>
+        No treks available yet.
+    </h5>
+    <p>
+        Click <strong>Create Trek</strong> to add your first trek.
+    </p>
+</div>
+{% endif %}
 
 <div class="row">
 
@@ -182,23 +217,35 @@ Quick Actions
 
 <br>
 
-<button class="action-btn green">
+<a
+href="{{ url_for('admin.create_trek') }}"
+class="action-btn green">
+
+<i class="bi bi-plus-circle"></i>
 
 Create Trek
 
-</button>
+</a>
 
-<button class="action-btn blue">
+<a
+href="{{ url_for('admin.staff_requests') }}"
+class="action-btn blue">
+
+<i class="bi bi-person-check"></i>
 
 Approve Staff
 
-</button>
+</a>
 
-<button class="action-btn orange">
+<a
+href="{{ url_for('admin.reports') }}"
+class="action-btn orange">
+
+<i class="bi bi-bar-chart"></i>
 
 Reports
 
-</button>
+</a>
 
 </div>
 
