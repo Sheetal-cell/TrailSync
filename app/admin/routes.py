@@ -16,6 +16,8 @@ from app.models import (
 )
 
 
+
+
 @admin_bp.route("/dashboard")
 @login_required
 def dashboard():
@@ -24,8 +26,6 @@ def dashboard():
         return "Unauthorized", 403
 
     total_users = User.query.count()
-
-    total_treks = Trek.query.count()
 
     total_staff = User.query.filter_by(
         role="STAFF"
@@ -36,16 +36,19 @@ def dashboard():
         status="PENDING"
     ).count()
 
-    total_bookings = Booking.query.count()
+    total_trekkers = User.query.filter_by(
+        role="TREKKER"
+    ).count()
+
+    total_treks = Trek.query.count()
 
     return render_template(
         "admin/dashboard.html",
-
         total_users=total_users,
-        total_treks=total_treks,
         total_staff=total_staff,
         pending_staff=pending_staff,
-        total_bookings=total_bookings
+        total_trekkers=total_trekkers,
+        total_treks=total_treks
     )
 
 @admin_bp.route("/treks/create", methods=["GET", "POST"])

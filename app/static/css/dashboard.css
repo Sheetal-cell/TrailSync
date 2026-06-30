@@ -860,3 +860,48 @@ transform:scale(1.01);
 .action-btn i{
     font-size:20px;
 }
+
+.stat-card{
+
+    background:#222c3d;
+    color:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+
+}
+
+.stat-card h6{
+
+    color:#a8b3c7;
+    margin-bottom:10px;
+
+}
+
+.stat-card h2{
+
+    font-size:36px;
+    font-weight:700;
+
+}
+
+.table-card{
+
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+}
+
+.table thead{
+
+    background:#273347;
+    color:white;
+
+}
+
+.table tbody tr:hover{
+    background:#f6f8fb;
+
+}

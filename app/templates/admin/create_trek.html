@@ -12,7 +12,7 @@ Create Trek
 
 <div class="card shadow-lg border-0 p-4">
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
 {{ form.hidden_tag() }}
 
@@ -51,6 +51,23 @@ Create Trek
 <div class="col-md-6 mb-3">
 {{ form.end_date.label(class="form-label") }}
 {{ form.end_date(class="form-control") }}
+</div>
+
+<div class="mb-3">
+    {{ form.image.label }}
+    {{ form.image(class="form-control") }}
+</div>
+
+<div class="mb-3">
+
+    {{ form.gallery.label(class="form-label") }}
+
+    {{ form.gallery(class="form-control") }}
+
+    <small class="text-muted">
+        Hold Ctrl (Windows) or Cmd (Mac) to select multiple images.
+    </small>
+
 </div>
 
 <div class="col-12 mb-3">

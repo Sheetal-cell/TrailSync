@@ -1,3 +1,5 @@
+
+
 {% extends "layouts/dashboard_base.html" %}
 
 {% block title %}
@@ -9,6 +11,8 @@ All Treks
 {% endblock %}
 
 {% block sidebar %}
+
+
 
 <a href="{{ url_for('admin.dashboard') }}">
     <i class="bi bi-grid"></i>
@@ -38,6 +42,37 @@ All Treks
 {% endblock %}
 {% block dashboard_content %}
 
+<div class="row mb-4">
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h6>Total Treks</h6>
+            <h2>{{ treks|length }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h6>Available</h6>
+
+            <h2>
+                {{ treks|selectattr("status","equalto","OPEN")|list|length }}
+            </h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h6>Closed</h6>
+            <h2>
+
+                {{ treks|selectattr("status","equalto","CLOSED")|list|length }}
+
+            </h2>
+        </div>
+    </div>
+</div>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>All Treks</h2>
     <a
@@ -60,105 +95,114 @@ All Treks
 
     </div>
 
-    <table class="table align-middle">
+    <div class="table-card">
 
-        <thead>
+<table class="table table-hover align-middle mb-0">
 
-            <tr>
+<thead>
 
-                <th>ID</th>
+<tr>
 
-                <th>Name</th>
+<th>ID</th>
 
-                <th>Location</th>
+<th>Name</th>
 
-                <th>Difficulty</th>
+<th>Location</th>
 
-                <th>Slots</th>
+<th>Difficulty</th>
 
-                <th>Status</th>
+<th>Slots</th>
 
-                <th>Actions</th>
+<th>Status</th>
 
-            </tr>
+<th>Actions</th>
 
-        </thead>
+</tr>
 
-        <tbody>
+</thead>
 
-        {% for trek in treks %}
+<tbody>
 
-        <tr>
+{% for trek in treks %}
 
-            <td>{{ trek.id }}</td>
+<tr>
 
-            <td>{{ trek.trek_name }}</td>
+<td>{{ trek.id }}</td>
 
-            <td>{{ trek.location }}</td>
+<td>{{ trek.trek_name }}</td>
 
-            <td>
+<td>{{ trek.location }}</td>
 
-                {% if trek.difficulty=="Easy" %}
+<td>
 
-                    <span class="badge bg-success">
-                        Easy
-                    </span>
+{% if trek.difficulty=="Easy" %}
 
-                {% elif trek.difficulty=="Moderate" %}
+<span class="badge bg-success">
 
-                    <span class="badge bg-warning text-dark">
-                        Moderate
-                    </span>
+Easy
 
-                {% else %}
+</span>
 
-                    <span class="badge bg-danger">
-                        Hard
-                    </span>
+{% elif trek.difficulty=="Moderate" %}
 
-                {% endif %}
+<span class="badge bg-warning text-dark">
 
-            </td>
+Moderate
 
-            <td>{{ trek.available_slots }}</td>
+</span>
 
-            <td>
+{% else %}
 
-                <span class="badge bg-primary">
+<span class="badge bg-danger">
 
-                    {{ trek.status }}
+Hard
 
-                </span>
+</span>
 
-            </td>
+{% endif %}
 
-            <td>
+</td>
 
-                <a
-                    href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}"
-                    class="btn btn-sm btn-warning">
+<td>{{ trek.available_slots }}</td>
 
-                    <i class="bi bi-pencil"></i>
+<td>
 
-                </a>
+<span class="badge bg-primary">
 
-                <a
-                    href="{{ url_for('admin.delete_trek', trek_id=trek.id) }}"
-                    class="btn btn-sm btn-danger">
+{{ trek.status }}
 
-                    <i class="bi bi-trash"></i>
+</span>
 
-                </a>
+</td>
 
-            </td>
+<td>
 
-        </tr>
+<a
+href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}"
+class="btn btn-warning btn-sm">
 
-        {% endfor %}
+<i class="bi bi-pencil"></i>
 
-        </tbody>
+</a>
 
-    </table>
+<a
+href="{{ url_for('admin.delete_trek', trek_id=trek.id) }}"
+class="btn btn-danger btn-sm">
 
+<i class="bi bi-trash"></i>
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
 </div>
 {% endblock %}

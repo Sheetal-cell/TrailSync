@@ -39,5 +39,11 @@ class Trek(db.Model):
         cascade="all, delete-orphan"
     )
 
+    gallery = db.relationship(
+        "TrekGallery",
+        back_populates="trek",
+        cascade="all, delete-orphan"
+    )
+
     def __repr__(self):
         return f"<Trek {self.trek_name}>"

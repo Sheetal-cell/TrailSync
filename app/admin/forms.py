@@ -8,6 +8,11 @@ from wtforms import (
     SubmitField
 )
 from wtforms.validators import DataRequired
+from flask_wtf.file import (
+    FileField,
+    MultipleFileField,
+    FileAllowed
+)
 
 
 class TrekForm(FlaskForm):
@@ -49,6 +54,26 @@ class TrekForm(FlaskForm):
     end_date = DateField(
         "End Date",
         validators=[DataRequired()]
+    )
+
+    image = FileField(
+        "Cover Image",
+        validators=[
+            FileAllowed(
+                ["jpg", "jpeg", "png", "webp"],
+                "Images only!"
+            )
+        ]
+    )
+
+    gallery = MultipleFileField(
+        "Gallery Images",
+        validators=[
+            FileAllowed(
+                ["jpg", "jpeg", "png", "webp"],
+                "Images only!"
+            )
+        ]
     )
 
     description = TextAreaField(
