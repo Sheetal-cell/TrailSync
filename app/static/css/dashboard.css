@@ -648,3 +648,45 @@ background:#edf3f8;
 min-height:100vh;
 
 }
+
+/* 
+   TABLE
+ */
+
+.table-card{
+
+background:white;
+border-radius:24px;
+padding:25px;
+box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+}
+
+.table-header{
+
+display:flex;
+
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+
+}
+
+.search-input{
+
+width:280px;
+border-radius:30px;
+
+}
+
+.table tbody tr{
+transition:.3s;
+
+}
+
+.table tbody tr:hover{
+
+background:#f8fbfd;
+transform:scale(1.01);
+
+}

@@ -15,7 +15,7 @@ All Treks
     Dashboard
 </a>
 
-<a class="active-menu" href="{{ url_for('admin.all_treks') }}">
+<a href="{{ url_for('admin.all_treks') }}">
     <i class="bi bi-map"></i>
     Treks
 </a>
@@ -48,28 +48,117 @@ All Treks
     </a>
 </div>
 
-<table class="table table-hover bg-white shadow rounded">
-<thead>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Location</th>
-<th>Difficulty</th>
-<th>Slots</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-{% for trek in treks %}
-<tr>
-<td>{{ trek.id }}</td>
-<td>{{ trek.trek_name }}</td>
-<td>{{ trek.location }}</td>
-<td>{{ trek.difficulty }}</td>
-<td>{{ trek.available_slots }}</td>
-<td>{{ trek.status }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+<div class="table-card">
+
+    <div class="table-header">
+
+        <h3>Treks</h3>
+
+        <input
+            class="form-control search-input"
+            placeholder="Search treks...">
+
+    </div>
+
+    <table class="table align-middle">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Name</th>
+
+                <th>Location</th>
+
+                <th>Difficulty</th>
+
+                <th>Slots</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for trek in treks %}
+
+        <tr>
+
+            <td>{{ trek.id }}</td>
+
+            <td>{{ trek.trek_name }}</td>
+
+            <td>{{ trek.location }}</td>
+
+            <td>
+
+                {% if trek.difficulty=="Easy" %}
+
+                    <span class="badge bg-success">
+                        Easy
+                    </span>
+
+                {% elif trek.difficulty=="Moderate" %}
+
+                    <span class="badge bg-warning text-dark">
+                        Moderate
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-danger">
+                        Hard
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>{{ trek.available_slots }}</td>
+
+            <td>
+
+                <span class="badge bg-primary">
+
+                    {{ trek.status }}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <a
+                    href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}"
+                    class="btn btn-sm btn-warning">
+
+                    <i class="bi bi-pencil"></i>
+
+                </a>
+
+                <a
+                    href="{{ url_for('admin.delete_trek', trek_id=trek.id) }}"
+                    class="btn btn-sm btn-danger">
+
+                    <i class="bi bi-trash"></i>
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
 {% endblock %}

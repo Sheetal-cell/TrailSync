@@ -110,3 +110,50 @@ def all_treks():
         "admin/all_treks.html",
         treks=treks
     )
+
+@admin_bp.route("/treks/edit/<int:trek_id>", methods=["GET", "POST"])
+@login_required
+def edit_trek(trek_id):
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    form = TrekForm(obj=trek)
+
+    if form.validate_on_submit():
+
+        form.populate_obj(trek)
+
+        db.session.commit()
+
+        flash(
+            "Trek updated successfully.",
+            "success"
+        )
+
+        return redirect(
+            url_for("admin.all_treks")
+        )
+
+    return render_template(
+        "admin/create_trek.html",
+        form=form
+    )
+
+@admin_bp.route("/treks/delete/<int:trek_id>")
+@login_required
+def delete_trek(trek_id):
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    db.session.delete(trek)
+
+    db.session.commit()
+
+    flash(
+        "Trek deleted successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for("admin.all_treks")
+    )
