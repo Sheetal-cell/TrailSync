@@ -190,3 +190,18 @@ def approve_staff(user_id):
     return redirect(
         url_for("admin.staff")
     )
+
+
+@admin_bp.route("/users")
+@login_required
+def users():
+
+    if current_user.role != "ADMIN":
+        return "Unauthorized", 403
+
+    users = User.query.order_by(User.created_at.desc()).all()
+
+    return render_template(
+        "admin/users.html",
+        users=users
+    )

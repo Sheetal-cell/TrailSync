@@ -399,6 +399,7 @@ font-weight:500;
     padding:30px;
     border-radius:22px;
     margin-top:30px;
+    margin-bottom: 30px;
 
 }
 
@@ -689,4 +690,173 @@ transition:.3s;
 background:#f8fbfd;
 transform:scale(1.01);
 
+}
+
+.main-content{
+    margin-left:270px;
+    padding:35px;
+    background:#f5f7fb;
+    min-height:100vh;
+}
+
+.page-content{
+    margin-top:30px;
+}
+
+.stats-card{
+    background:#fff;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+    transition:.3s;
+    border:none;
+}
+
+.stats-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+}
+
+.stats-card h2{
+    font-size:36px;
+    font-weight:700;
+    margin-top:15px;
+}
+
+.stats-card p{
+    color:#777;
+    margin:0;
+}
+
+.table-card{
+
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    margin-top:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+
+}
+
+.table thead{
+
+    background:#f8fafc;
+
+}
+
+.table th{
+
+    border:none;
+    font-weight:600;
+    color:#555;
+
+}
+
+.table td{
+
+    vertical-align:middle;
+    padding:18px;
+
+}
+
+.search-input{
+
+    width:300px;
+    border-radius:30px;
+    padding:10px 18px;
+
+}
+
+.btn{
+
+    border-radius:12px;
+    padding:10px 18px;
+    font-weight:600;
+
+}
+
+.btn-success{
+    background:#16a34a;
+
+}
+
+.btn-warning{
+    color:white;
+
+}
+
+
+.sidebar{
+
+    width:260px;
+    background:white;
+    box-shadow:8px 0 30px rgba(0,0,0,.05);
+
+}
+
+.sidebar a{
+
+    margin:8px 15px;
+    border-radius:12px;
+    padding:14px 18px;
+
+}
+
+.sidebar a:hover{
+    background:#edf6ff;
+
+}
+
+.active-menu{
+
+    background:#2563eb;
+    color:white !important;
+
+}
+
+.topbar{
+
+    background:white;
+    border-radius:18px;
+    padding:22px 30px;
+    margin-bottom:35px;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.quick-actions{
+    padding-top: 20px;
+}
+
+.quick-actions-card{
+    background:#242c3d;
+    border-radius:18px;
+    padding:30px;
+    margin-top:30px;
+}
+
+.action-btn{
+    min-width:200px;
+    height:55px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    font-size:17px;
+    font-weight:600;
+
+    border-radius:12px;
+    transition:.25s;
+}
+
+.action-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(0,0,0,.25);
+}
+
+.action-btn i{
+    font-size:20px;
 }

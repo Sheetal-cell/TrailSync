@@ -1,0 +1,115 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Users
+{% endblock %}
+
+{% block heading %}
+User Management
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="{{ url_for('admin.dashboard') }}">
+    <i class="bi bi-grid"></i>
+    Dashboard
+</a>
+
+<a href="{{ url_for('admin.all_treks') }}">
+    <i class="bi bi-map"></i>
+    Treks
+</a>
+
+<a class="active-menu"
+   href="{{ url_for('admin.users') }}">
+    <i class="bi bi-people"></i>
+    Users
+</a>
+
+<a href="{{ url_for('admin.staff') }}">
+    <i class="bi bi-person-workspace"></i>
+    Staff
+</a>
+
+<a href="#">
+    <i class="bi bi-journal-check"></i>
+    Bookings
+</a>
+
+{% endblock %}
+{% block dashboard_content %}
+
+<div class="table-card">
+
+    <div class="table-header">
+        <h3>Registered Users</h3>
+    </div>
+
+    <table class="table table-hover align-middle">
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+        {% for user in users %}
+
+        <tr>
+
+            <td>{{ user.id }}</td>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+
+            <td>
+
+                {% if user.role=="ADMIN" %}
+
+                    <span class="badge bg-danger">
+                        ADMIN
+                    </span>
+                {% elif user.role=="STAFF" %}
+                    <span class="badge bg-primary">
+                        STAFF
+                    </span>
+
+                {% else %}
+                    <span class="badge bg-success">
+                        TREKKER
+                    </span>
+
+                {% endif %}
+
+            </td>
+            <td>
+
+                {% if user.status=="APPROVED" %}
+                    <span class="badge bg-success">
+                        APPROVED
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-warning text-dark">
+                        PENDING
+                    </span>
+                {% endif %}
+
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
