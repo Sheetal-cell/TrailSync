@@ -9,3 +9,8 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(BASE_DIR, "app", "static", "uploads")
     QR_FOLDER = os.path.join(BASE_DIR, "app", "static", "qr")
+    UPLOAD_FOLDER = os.path.join(
+    "app",
+    "static",
+    "uploads"
+    )

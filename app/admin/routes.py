@@ -14,7 +14,11 @@ from app.models import (
     Trek,
     Booking
 )
+import os
 
+from flask import current_app
+from werkzeug.utils import secure_filename
+from app.models import TrekGallery
 
 
 
@@ -62,7 +66,25 @@ def create_trek():
 
     if form.validate_on_submit():
 
+        cover_image = None
+
+        if form.image.data:
+
+            file = form.image.data
+
+            filename = secure_filename(file.filename)
+
+            file.save(
+                os.path.join(
+                    current_app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+            cover_image = filename
+
         trek = Trek(
+
             trek_name=form.trek_name.data,
             location=form.location.data,
             difficulty=form.difficulty.data,
@@ -71,21 +93,49 @@ def create_trek():
             start_date=form.start_date.data,
             end_date=form.end_date.data,
             description=form.description.data,
-            status="OPEN"
+            status="OPEN",
+
+            image=cover_image
+
         )
 
         db.session.add(trek)
+
+        db.session.commit()
+
+        if form.gallery.data:
+
+            for file in form.gallery.data:
+
+                if file.filename == "":
+                    continue
+
+                filename = secure_filename(
+                    file.filename
+                )
+
+                file.save(
+                    os.path.join(
+                        current_app.config["UPLOAD_FOLDER"],
+                        filename
+                    )
+                )
+                
+                gallery = TrekGallery(
+                    trek_id=trek.id,
+                    image=filename
+                )
+
+                db.session.add(gallery)
         db.session.commit()
 
         flash(
             "Trek created successfully!",
             "success"
         )
-
         return redirect(
             url_for("admin.all_treks")
         )
-
     return render_template(
         "admin/create_trek.html",
         form=form
