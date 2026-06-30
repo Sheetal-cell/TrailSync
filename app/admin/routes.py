@@ -15,6 +15,7 @@ from app.models import (
     Booking
 )
 
+
 @admin_bp.route("/dashboard")
 @login_required
 def dashboard():
@@ -87,10 +88,6 @@ def create_trek():
         form=form
     )
 
-@admin_bp.route("/staff")
-@login_required
-def staff_requests():
-    return "<h2>Staff Approval Page - Coming Soon</h2>"
 
 
 @admin_bp.route("/reports")
@@ -156,4 +153,40 @@ def delete_trek(trek_id):
 
     return redirect(
         url_for("admin.all_treks")
+    )
+
+@admin_bp.route("/staff")
+@login_required
+def staff():
+
+    if current_user.role != "ADMIN":
+        return "Unauthorized", 403
+
+    staff_members = User.query.filter_by(role="STAFF").all()
+
+    return render_template(
+        "admin/staff.html",
+        staff_members=staff_members
+    )
+
+@admin_bp.route("/staff/approve/<int:user_id>")
+@login_required
+def approve_staff(user_id):
+
+    if current_user.role != "ADMIN":
+        return "Unauthorized", 403
+
+    staff = User.query.get_or_404(user_id)
+
+    staff.status = "APPROVED"
+
+    db.session.commit()
+
+    flash(
+        "Staff approved successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for("admin.staff")
     )
