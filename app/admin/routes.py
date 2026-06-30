@@ -258,3 +258,17 @@ def users():
         "admin/users.html",
         users=users
     )
+
+@admin_bp.route("/treks/<int:trek_id>")
+@login_required
+def trek_details(trek_id):
+
+    if current_user.role != "ADMIN":
+        return "Unauthorized", 403
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    return render_template(
+        "admin/trek_details.html",
+        trek=trek
+    )

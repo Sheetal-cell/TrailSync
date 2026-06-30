@@ -105,6 +105,7 @@ All Treks
 
 <th>ID</th>
 
+<th>Image</th>
 <th>Name</th>
 
 <th>Location</th>
@@ -128,8 +129,33 @@ All Treks
 <tr>
 
 <td>{{ trek.id }}</td>
+<td>
+    <a href="{{ url_for('admin.trek_details',
+        trek_id=trek.id) }}">
 
-<td>{{ trek.trek_name }}</td>
+        <img
+            src="{{ url_for(
+            'static',
+            filename='uploads/' + trek.image) }}"
+            width="90"
+            height="60"
+            style="object-fit:cover;border-radius:10px;">
+
+    </a>
+</td>
+
+<td>
+
+<a
+href="{{ url_for('admin.trek_details',
+trek_id=trek.id) }}"
+class="fw-bold text-decoration-none">
+
+{{ trek.trek_name }}
+
+</a>
+
+</td>
 
 <td>{{ trek.location }}</td>
 

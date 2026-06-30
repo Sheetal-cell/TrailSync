@@ -1,0 +1,60 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Trek Details
+{% endblock %}
+
+{% block heading %}
+{{ trek.trek_name }}
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="{{ url_for('admin.dashboard') }}">
+    Dashboard
+</a>
+
+<a class="active-menu"
+   href="{{ url_for('admin.all_treks') }}">
+    Treks
+</a>
+
+{% endblock %}
+{% block dashboard_content %}
+
+<div class="card shadow-lg border-0">
+
+    <img
+        src="{{ url_for('static',
+        filename='uploads/' + trek.image) }}"
+        class="card-img-top"
+        style="height:400px;object-fit:cover;">
+
+    <div class="card-body">
+        <h2>{{ trek.trek_name }}</h2>
+
+        <p class="text-muted">
+            {{ trek.location }}
+        </p>
+        <hr>
+        <h5>Description</h5>
+        <p>
+            {{ trek.description }}
+        </p>
+
+        <div class="row mt-4">
+            {% for image in trek.gallery %}
+            <div class="col-md-3 mb-3">
+
+                <img
+                    src="{{ url_for(
+                    'static',
+                    filename='uploads/' + image.image) }}"
+                    class="img-fluid rounded shadow">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
