@@ -87,7 +87,14 @@ def book_trek(trek_id):
 
     flash("Trek booked successfully!", "success")
 
-    return redirect(url_for("trekker.dashboard"))
+    flash(
+        "Trek booked successfully!",
+        "success"
+    )
+
+
+
+    return redirect(url_for("trekker.my_bookings"))
 
 @trekker_bp.route("/my-bookings")
 @login_required

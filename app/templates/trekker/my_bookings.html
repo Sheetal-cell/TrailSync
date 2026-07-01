@@ -8,51 +8,108 @@ My Bookings
 My Bookings
 {% endblock %}
 
+{% block sidebar %}
+
+<a href="{{ url_for('trekker.dashboard') }}">
+    <i class="bi bi-house"></i>
+    Dashboard
+</a>
+
+<a class="active-menu"
+href="{{ url_for('trekker.my_bookings') }}">
+    <i class="bi bi-journal-check"></i>
+    My Bookings
+</a>
+
+{% endblock %}
+
 {% block dashboard_content %}
 
-<div class="table-card">
+<div class="card shadow border-0">
 
-    <h3 class="mb-4">My Bookings</h3>
+<div class="card-body">
 
-    <table class="table">
+<h3 class="mb-4">
+My Trek Bookings
+</h3>
 
-        <thead>
+{% if bookings %}
 
-            <tr>
+<table class="table table-hover">
 
-                <th>Trek</th>
+<thead>
 
-                <th>Date</th>
+<tr>
 
-                <th>Booking Status</th>
+<th>Trek</th>
 
-                <th>Payment Status</th>
+<th>Location</th>
 
-            </tr>
+<th>Status</th>
 
-        </thead>
+<th>Payment</th>
 
-        <tbody>
+<th>Date</th>
 
-        {% for booking in bookings %}
+</tr>
 
-            <tr>
+</thead>
 
-                <td>{{ booking.trek.trek_name }}</td>
+<tbody>
 
-                <td>{{ booking.booking_date }}</td>
+{% for booking in bookings %}
 
-                <td>{{ booking.booking_status }}</td>
+<tr>
 
-                <td>{{ booking.payment_status }}</td>
+<td>{{ booking.trek.trek_name }}</td>
 
-            </tr>
+<td>{{ booking.trek.location }}</td>
 
-        {% endfor %}
+<td>
 
-        </tbody>
+<span class="badge bg-success">
 
-    </table>
+{{ booking.booking_status }}
+
+</span>
+
+</td>
+
+<td>
+
+<span class="badge bg-warning text-dark">
+
+{{ booking.payment_status }}
+
+</span>
+
+</td>
+
+<td>
+
+{{ booking.booking_date.strftime("%d %b %Y") }}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info">
+
+You haven't booked any treks yet.
+
+</div>
+
+{% endif %}
+
+</div>
 
 </div>
 
