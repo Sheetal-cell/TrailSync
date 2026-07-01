@@ -42,14 +42,11 @@ My Trek Bookings
 <tr>
 
 <th>Trek</th>
-
 <th>Location</th>
-
 <th>Status</th>
-
 <th>Payment</th>
-
 <th>Date</th>
+<th>Action</th>
 
 </tr>
 
@@ -69,12 +66,18 @@ My Trek Bookings
 
 <span class="badge bg-success">
 
-{{ booking.booking_status }}
+{% if booking.booking_status == "BOOKED" %}
 
+<span class="badge bg-success">
+BOOKED
 </span>
-
+{% else %}
+<span class="badge bg-danger">
+CANCELLED
+</span>
+{% endif %}
+</span>
 </td>
-
 <td>
 
 <span class="badge bg-warning text-dark">
@@ -88,6 +91,24 @@ My Trek Bookings
 <td>
 
 {{ booking.booking_date.strftime("%d %b %Y") }}
+
+</td>
+<td>
+{% if booking.booking_status == "BOOKED" %}
+<a
+href="{{ url_for('trekker.cancel_booking',
+booking_id=booking.id) }}"
+class="btn btn-danger btn-sm">
+Cancel
+
+</a>
+{% else %}
+
+<span class="text-muted">
+Cancelled
+
+</span>
+{% endif %}
 
 </td>
 

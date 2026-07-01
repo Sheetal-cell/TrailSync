@@ -60,7 +60,8 @@ def book_trek(trek_id):
 
     existing_booking = Booking.query.filter_by(
         user_id=current_user.id,
-        trek_id=trek.id
+        trek_id=trek.id,
+        booking_status="BOOKED"
     ).first()
 
     if existing_booking:
@@ -107,4 +108,38 @@ def my_bookings():
     return render_template(
         "trekker/my_bookings.html",
         bookings=bookings
+    )
+
+@trekker_bp.route("/cancel-booking/<int:booking_id>")
+@login_required
+def cancel_booking(booking_id):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.user_id != current_user.id:
+        return "Unauthorized", 403
+
+    if booking.booking_status == "CANCELLED":
+
+        flash(
+            "Booking already cancelled.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("trekker.my_bookings")
+        )
+
+    booking.booking_status = "CANCELLED"
+    booking.trek.available_slots += 1
+
+    db.session.commit()
+
+    flash(
+        "Booking cancelled successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for("trekker.my_bookings")
     )
