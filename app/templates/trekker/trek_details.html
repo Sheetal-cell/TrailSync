@@ -31,6 +31,17 @@ class="img-fluid rounded shadow">
 {{ trek.description }}
 
 </p>
+<hr class="my-4">
+
+<a
+    href="{{ url_for('trekker.book_trek', trek_id=trek.id) }}"
+    class="btn btn-success btn-lg">
+
+    <i class="bi bi-calendar-check"></i>
+
+    Book This Trek
+
+</a>
 
 <div class="row">
 
