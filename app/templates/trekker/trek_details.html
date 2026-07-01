@@ -1,0 +1,75 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+{{ trek.trek_name }}
+{% endblock %}
+{% block heading %}
+{{ trek.trek_name }}
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="{{ url_for('trekker.dashboard') }}">
+Dashboard
+</a>
+
+{% endblock %}
+{% block dashboard_content %}
+<div class="row">
+
+<div class="col-lg-8">
+<img
+src="{{ url_for('static',
+filename='uploads/' + trek.image) }}"
+class="img-fluid rounded shadow">
+
+<h2 class="mt-4">
+{{ trek.trek_name }}
+
+</h2>
+<p>
+{{ trek.description }}
+
+</p>
+
+<div class="row">
+
+{% for image in trek.gallery %}
+<div class="col-md-4 mt-3">
+
+<img
+src="{{ url_for('static',
+filename='uploads/' + image.image) }}"
+class="img-fluid rounded shadow">
+
+</div>
+
+{% endfor %}
+</div>
+</div>
+
+<div class="col-lg-4">
+<div class="card shadow">
+<div class="card-body">
+
+<h4>Quick Info</h4>
+
+<hr>
+<p><strong>Location</strong><br>{{ trek.location }}</p>
+<p><strong>Difficulty</strong><br>{{ trek.difficulty }}</p>
+<p><strong>Duration</strong><br>{{ trek.duration }} Days</p>
+<p><strong>Slots Left</strong><br>{{ trek.available_slots }}</p>
+<p><strong>Start Date</strong><br>{{ trek.start_date }}</p>
+
+<a
+href="#"
+class="btn btn-success w-100">
+Book Now
+
+</a>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -32,6 +32,12 @@ def create_app():
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
+    from app.trekker import trekker_bp
+
+    app.register_blueprint(
+        trekker_bp,
+        url_prefix="/trekker"
+    )
     app.register_blueprint(staff_bp)
     app.register_blueprint(user_bp)
 

@@ -37,7 +37,7 @@ def login():
         elif current_user.role == "STAFF":
             return redirect(url_for("staff.dashboard"))
 
-        return redirect(url_for("user.dashboard"))
+        return redirect(url_for("trekker.dashboard"))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -105,11 +105,10 @@ def login():
             return redirect(
                 url_for("staff.dashboard")
             )
+        elif user.role == "TREKKER":
+            return redirect(url_for("trekker.dashboard"))
 
-        else:
-            return redirect(
-                url_for("user.dashboard")
-            )
+        return redirect(url_for("auth.login"))
     return render_template(
         "auth/login.html",
         form=form
@@ -131,7 +130,7 @@ def register():
         elif current_user.role == "STAFF":
             return redirect(url_for("staff.dashboard"))
 
-        return redirect(url_for("user.dashboard"))
+        return redirect(url_for("trekker.dashboard"))
     form = RegistrationForm()
     if form.validate_on_submit():
 
