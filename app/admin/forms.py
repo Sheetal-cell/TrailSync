@@ -14,6 +14,8 @@ from flask_wtf.file import (
     FileAllowed
 )
 
+from app.models import User
+
 
 class TrekForm(FlaskForm):
 
@@ -74,6 +76,11 @@ class TrekForm(FlaskForm):
                 "Images only!"
             )
         ]
+    )
+
+    assigned_staff = SelectField(
+        "Assign Staff",
+        coerce=int
     )
 
     description = TextAreaField(

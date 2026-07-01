@@ -70,6 +70,16 @@ Create Trek
 
 </div>
 
+<div class="mb-3">
+
+{{ form.assigned_staff.label }}
+
+{{ form.assigned_staff(
+class="form-select"
+) }}
+
+</div>
+
 <div class="col-12 mb-3">
 {{ form.description.label(class="form-label") }}
 {{ form.description(class="form-control", rows=5) }}

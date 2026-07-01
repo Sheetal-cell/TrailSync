@@ -2,6 +2,7 @@ from flask import (
     render_template,
     redirect,
     url_for,
+    request,
     flash
 )
 from flask_login import login_required, current_user
@@ -63,6 +64,19 @@ def create_trek():
         return "Unauthorized", 403
 
     form = TrekForm()
+    staff = User.query.filter_by(
+        role="STAFF",
+        status="APPROVED"
+    ).all()
+
+    form.assigned_staff.choices = [
+        (0, "No Staff")
+    ]
+
+    form.assigned_staff.choices += [
+        (s.id, s.full_name)
+        for s in staff
+    ]
 
     if form.validate_on_submit():
 
@@ -94,6 +108,11 @@ def create_trek():
             end_date=form.end_date.data,
             description=form.description.data,
             status="OPEN",
+            assigned_staff_id=(
+                form.assigned_staff.data
+                if form.assigned_staff.data != 0
+                else None
+            ),
 
             image=cover_image
 
@@ -185,10 +204,41 @@ def edit_trek(trek_id):
     trek = Trek.query.get_or_404(trek_id)
 
     form = TrekForm(obj=trek)
+    staff = User.query.filter_by(
+        role="STAFF",
+        status="APPROVED"
+    ).all()
+
+    form.assigned_staff.choices = [
+        (0, "No Staff")
+    ]
+
+    form.assigned_staff.choices += [
+        (s.id, s.full_name)
+        for s in staff
+    ]
+
+    if request.method == "GET":
+        form.assigned_staff.data = (
+            trek.assigned_staff_id or 0
+        )
 
     if form.validate_on_submit():
 
-        form.populate_obj(trek)
+        trek.trek_name = form.trek_name.data
+        trek.location = form.location.data
+        trek.difficulty = form.difficulty.data
+        trek.duration = form.duration.data
+        trek.available_slots = form.available_slots.data
+        trek.start_date = form.start_date.data
+        trek.end_date = form.end_date.data
+        trek.description = form.description.data
+
+        trek.assigned_staff_id = (
+            form.assigned_staff.data
+            if form.assigned_staff.data != 0
+            else None
+        )
 
         db.session.commit()
 
