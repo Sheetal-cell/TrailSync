@@ -161,6 +161,23 @@ def all_treks():
         treks=treks
     )
 
+
+@admin_bp.route("/bookings")
+@login_required
+def bookings():
+
+    if current_user.role != "ADMIN":
+        return "Unauthorized", 403
+
+    bookings = Booking.query.order_by(
+        Booking.booking_date.desc()
+    ).all()
+
+    return render_template(
+        "admin/bookings.html",
+        bookings=bookings
+    )
+
 @admin_bp.route("/treks/edit/<int:trek_id>", methods=["GET", "POST"])
 @login_required
 def edit_trek(trek_id):

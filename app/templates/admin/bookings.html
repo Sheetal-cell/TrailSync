@@ -1,0 +1,77 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Bookings
+{% endblock %}
+
+{% block heading %}
+All Bookings
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="{{ url_for('admin.dashboard') }}">
+<i class="bi bi-grid"></i>
+Dashboard
+</a>
+
+<a href="{{ url_for('admin.all_treks') }}">
+<i class="bi bi-map"></i>
+Treks
+</a>
+
+<a class="active-menu"
+href="{{ url_for('admin.bookings') }}">
+<i class="bi bi-journal-check"></i>
+Bookings
+</a>
+
+{% endblock %}
+{% block dashboard_content %}
+
+<div class="card shadow">
+<div class="card-body">
+<h3 class="mb-4">
+All Trek Bookings
+
+</h3>
+<table class="table table-hover">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Trekker</th>
+<th>Trek</th>
+<th>Status</th>
+<th>Payment</th>
+
+<th>Date</th>
+</tr>
+
+</thead>
+<tbody>
+
+{% for booking in bookings %}
+
+<tr>
+
+<td>{{ booking.id }}</td>
+
+<td>{{ booking.user.full_name }}</td>
+<td>{{ booking.trek.trek_name }}</td>
+<td>{{ booking.booking_status }}</td>
+<td>{{ booking.payment_status }}</td>
+<td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}
