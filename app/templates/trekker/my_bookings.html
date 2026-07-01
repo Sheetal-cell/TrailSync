@@ -1,0 +1,59 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+My Bookings
+{% endblock %}
+
+{% block heading %}
+My Bookings
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="table-card">
+
+    <h3 class="mb-4">My Bookings</h3>
+
+    <table class="table">
+
+        <thead>
+
+            <tr>
+
+                <th>Trek</th>
+
+                <th>Date</th>
+
+                <th>Booking Status</th>
+
+                <th>Payment Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for booking in bookings %}
+
+            <tr>
+
+                <td>{{ booking.trek.trek_name }}</td>
+
+                <td>{{ booking.booking_date }}</td>
+
+                <td>{{ booking.booking_status }}</td>
+
+                <td>{{ booking.payment_status }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

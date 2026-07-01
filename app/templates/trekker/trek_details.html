@@ -33,16 +33,9 @@ class="img-fluid rounded shadow">
 </p>
 <hr class="my-4">
 
-<a
-    href="{{ url_for('trekker.book_trek', trek_id=trek.id) }}"
-    class="btn btn-success btn-lg">
-
-    <i class="bi bi-calendar-check"></i>
-
-    Book This Trek
-
+<a href="/trekker/book/{{ trek.id }}">
+    TEST BOOK LINK
 </a>
-
 <div class="row">
 
 {% for image in trek.gallery %}
@@ -73,7 +66,7 @@ class="img-fluid rounded shadow">
 <p><strong>Start Date</strong><br>{{ trek.start_date }}</p>
 
 <a
-href="#"
+ href="{{ url_for('trekker.book_trek', trek_id=trek.id) }}"
 class="btn btn-success w-100">
 Book Now
 

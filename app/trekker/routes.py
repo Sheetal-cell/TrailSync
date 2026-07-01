@@ -1,4 +1,9 @@
-from flask import render_template
+from flask import (
+    render_template,
+    redirect,
+    url_for,
+    flash
+)
 from flask_login import login_required, current_user
 
 from app.trekker import trekker_bp
@@ -30,6 +35,9 @@ def dashboard():
 @login_required
 def trek_details(trek_id):
 
+    if current_user.role != "TREKKER":
+        return "Unauthorized", 403
+
     trek = Trek.query.get_or_404(trek_id)
 
     return render_template(
@@ -41,9 +49,55 @@ def trek_details(trek_id):
 @login_required
 def book_trek(trek_id):
 
+    print("BOOK ROUTE HIT")
+
     if current_user.role != "TREKKER":
         return "Unauthorized", 403
 
     trek = Trek.query.get_or_404(trek_id)
 
-    return f"Booking page for {trek.trek_name}"
+    print("Booking trek:", trek.id)
+
+    existing_booking = Booking.query.filter_by(
+        user_id=current_user.id,
+        trek_id=trek.id
+    ).first()
+
+    if existing_booking:
+        print("Already booked")
+        flash("You have already booked this trek.", "warning")
+        return redirect(url_for("trekker.trek_details", trek_id=trek.id))
+
+    print("Creating booking")
+
+    booking = Booking(
+        user_id=current_user.id,
+        trek_id=trek.id,
+        booking_status="BOOKED",
+        payment_status="PENDING"
+    )
+
+    db.session.add(booking)
+
+    trek.available_slots -= 1
+
+    db.session.commit()
+
+    print("Booking saved successfully")
+
+    flash("Trek booked successfully!", "success")
+
+    return redirect(url_for("trekker.dashboard"))
+
+@trekker_bp.route("/my-bookings")
+@login_required
+def my_bookings():
+
+    bookings = Booking.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return render_template(
+        "trekker/my_bookings.html",
+        bookings=bookings
+    )
