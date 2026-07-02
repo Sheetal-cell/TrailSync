@@ -441,3 +441,17 @@ def toggle_user(user_id):
     db.session.commit()
 
     return redirect(url_for("admin.users"))
+
+
+@admin_bp.route("/history")
+@login_required
+def trek_history():
+
+    bookings = Booking.query.order_by(
+        Booking.booking_date.desc()
+    ).all()
+
+    return render_template(
+        "admin/history.html",
+        bookings=bookings
+    )

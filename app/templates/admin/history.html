@@ -1,0 +1,56 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Trek History
+{% endblock %}
+
+{% block heading %}
+Trek History
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="card shadow">
+<div class="card-body">
+<table class="table">
+
+<thead>
+<tr>
+
+<th>User</th>
+<th>Trek</th>
+<th>Date</th>
+<th>Status</th>
+<th>Payment</th>
+</tr>
+</thead>
+<tbody>
+
+{% for booking in bookings %}
+
+<tr>
+
+<td>{{ booking.user.full_name }}</td>
+<td>{{ booking.trek.trek_name }}</td>
+<td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+<td>
+<span class="badge bg-success">
+
+{{ booking.booking_status }}
+
+</span>
+</td>
+<td>
+
+{{ booking.payment_status }}
+
+</td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}
