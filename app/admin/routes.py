@@ -194,43 +194,59 @@ def reports():
 @login_required
 def all_treks():
 
-    search = request.args.get("search","")
-
+    search = request.args.get("search", "")
     treks = Trek.query
-
     if search:
         treks = treks.filter(
             Trek.trek_name.ilike(f"%{search}%")
         )
 
     treks = treks.order_by(
-        Trek.start_date
-    ).all()
-
-    treks = Trek.query.order_by(
-        Trek.start_date
+        Trek.start_date.desc()
     ).all()
 
     return render_template(
         "admin/all_treks.html",
-        treks=treks
+        treks=treks,
+        search=search
     )
-
-
 @admin_bp.route("/bookings")
 @login_required
 def bookings():
 
-    if current_user.role != "ADMIN":
-        return "Unauthorized", 403
+    
+    print(request.args)
+    search = request.args.get("search", "")
+    booking_status = request.args.get("booking_status", "")
+    payment_status = request.args.get("payment_status", "")
 
-    bookings = Booking.query.order_by(
+    print(search)
+    print(booking_status)
+    print(payment_status)
+
+    query = Booking.query
+
+    if search:
+        query = query.join(User).filter(
+            User.full_name.ilike(f"%{search}%")
+        )
+    if booking_status:
+        query = query.filter(
+            Booking.booking_status == booking_status
+        )
+    if payment_status:
+        query = query.filter(
+            Booking.payment_status == payment_status
+        )
+    bookings = query.order_by(
         Booking.booking_date.desc()
     ).all()
-
     return render_template(
         "admin/bookings.html",
-        bookings=bookings
+        bookings=bookings,
+        search=search,
+        booking_status=booking_status,
+        payment_status=payment_status
     )
 
 @admin_bp.route("/treks/edit/<int:trek_id>", methods=["GET", "POST"])
@@ -368,7 +384,7 @@ def users():
     if current_user.role != "ADMIN":
         return "Unauthorized", 403
     search = request.args.get("search", "")
-    users = User.query
+    users = User.query.filter(User.role=="TREKKER")
     if search:
         users = users.filter(
             User.full_name.ilike(f"%{search}%")

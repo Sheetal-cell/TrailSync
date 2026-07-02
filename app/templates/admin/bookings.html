@@ -35,6 +35,62 @@ Bookings
 All Trek Bookings
 
 </h3>
+
+<form method="GET" class="row g-3 mb-4">
+<div class="col-md-4">
+
+<input
+type="text"
+class="form-control"
+name="search"
+placeholder="Search Trekker..."
+value="{{ search }}">
+
+</div>
+<div class="col-md-3">
+<select
+class="form-select"
+name="booking_status">
+
+<option value="">All Booking Status</option>
+<option value="BOOKED"
+{% if booking_status=="BOOKED" %}selected{% endif %}>
+Booked
+</option>
+<option value="CANCELLED"
+{% if booking_status=="CANCELLED" %}selected{% endif %}>
+Cancelled
+</option>
+
+<option value="COMPLETED"
+{% if booking_status=="COMPLETED" %}selected{% endif %}>
+Completed
+</option>
+</select>
+</div>
+<div class="col-md-3">
+<select
+class="form-select"
+name="payment_status">
+<option value="">All Payments</option>
+<option value="PENDING"
+{% if payment_status=="PENDING" %}selected{% endif %}>
+Pending
+</option>
+<option value="PAID"
+{% if payment_status=="PAID" %}selected{% endif %}>
+Paid
+</option>
+</select>
+</div>
+<div class="col-md-2">
+<button class="btn btn-success w-100">
+<i class="bi bi-search"></i>
+
+Filter
+</button>
+</div>
+</form>
 <table class="table table-hover">
 
 <thead>
@@ -65,7 +121,27 @@ All Trek Bookings
 
 <td>{{ booking.user.full_name }}</td>
 <td>{{ booking.trek.trek_name }}</td>
-<td>{{ booking.booking_status }}</td>
+<td>
+    {% if booking.booking_status=="BOOKED" %}
+
+    <span class="badge bg-success">
+        Booked
+    </span>
+
+    {% elif booking.booking_status=="CANCELLED" %}
+
+    <span class="badge bg-danger">
+Cancelled
+    </span>
+
+    {% else %}
+
+    <span class="badge bg-primary">
+        Completed
+    </span>
+
+    {% endif %}
+</td>
 <td>{{ booking.payment_status }}</td>
 <td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
 <td>
@@ -90,6 +166,14 @@ Not Assigned
 
 </tbody>
 </table>
+{% if not bookings %}
+<div class="alert alert-info text-center mt-4">
+<h5>No bookings found.</h5>
+<p>Try changing the filters or wait for trekkers to make bookings.</p>
+
+</div>
+
+{% endif %}
 </div>
 </div>
 
