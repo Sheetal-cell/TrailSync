@@ -391,26 +391,27 @@ def trek_details(trek_id):
 def toggle_user(user_id):
 
     if current_user.role != "ADMIN":
-        return "Unauthorized",403
+        return "Unauthorized", 403
 
     user = User.query.get_or_404(user_id)
+
+    # Prevent deactivating yourself
+    if user.id == current_user.id:
+        flash("You cannot deactivate your own account.", "danger")
+        return redirect(url_for("admin.users"))
+
+    # Prevent deactivating any admin account
+    if user.role == "ADMIN":
+        flash("Admin accounts cannot be deactivated.", "danger")
+        return redirect(url_for("admin.users"))
+
+    user.is_active = not user.is_active
+
     if user.is_active:
-        user.is_active = False
-
-        flash(
-            "User deactivated.",
-            "warning"
-        )
-
+        flash("User activated.", "success")
     else:
-
-        user.is_active = True
-        flash(
-            "User activated.",
-            "success"
-        )
+        flash("User deactivated.", "warning")
 
     db.session.commit()
-    return redirect(
-        url_for("admin.users")
-    )
+
+    return redirect(url_for("admin.users"))
