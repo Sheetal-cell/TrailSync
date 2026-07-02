@@ -87,39 +87,32 @@ Search
 
             <td>
 
-                {% if user.is_active %}
+                {% if user.role == "ADMIN" %}
 
-                    <a
-                    class="btn btn-danger btn-sm"
-                        href="{{ url_for('admin.toggle_user',user_id=user.id) }}">
+                    <span class="badge bg-danger">ADMIN</span>
+                    <span class="badge bg-secondary">Protected</span>
 
+                {% else %}
+
+                    {% if user.is_active %}
+                        <a class="btn btn-danger btn-sm"
+                            href="{{ url_for('admin.toggle_user', user_id=user.id) }}"
+                            onclick="return confirm('Deactivate this user?')">
                             Deactivate
-
-                    </a>
-                {% else %}
-                    <a
-                    class="btn btn-success btn-sm"
-                        href="{{ url_for('admin.toggle_user',user_id=user.id) }}">
-
+                        </a>
+                    {% else %}
+                        <a class="btn btn-success btn-sm"
+                            href="{{ url_for('admin.toggle_user', user_id=user.id) }}"
+                            onclick="return confirm('Activate this user?')">
                             Activate
-                    </a>
-                {% endif %}
+                        </a>
+                    {% endif %}
 
-
-                {% if user.role=="ADMIN" %}
-
-                    <span class="badge bg-danger">
-                        ADMIN
-                    </span>
-                {% elif user.role=="STAFF" %}
-                    <span class="badge bg-primary">
-                        STAFF
-                    </span>
-
-                {% else %}
-                    <span class="badge bg-success">
-                        TREKKER
-                    </span>
+                    {% if user.role == "STAFF" %}
+                        <span class="badge bg-primary">STAFF</span>
+                    {% else %}
+                        <span class="badge bg-success">TREKKER</span>
+                    {% endif %}
 
                 {% endif %}
 
