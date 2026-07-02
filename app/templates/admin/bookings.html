@@ -47,7 +47,11 @@ All Trek Bookings
 <th>Status</th>
 <th>Payment</th>
 
+
 <th>Date</th>
+<th>Guide</th>
+<th>People</th>
+<th>Total</th>
 </tr>
 
 </thead>
@@ -64,6 +68,21 @@ All Trek Bookings
 <td>{{ booking.booking_status }}</td>
 <td>{{ booking.payment_status }}</td>
 <td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+<td>
+{% if booking.trek.assigned_staff %}
+{{ booking.trek.assigned_staff.full_name }}
+{% else %}
+Not Assigned
+{% endif %}
+</td>
+<td>
+{{ booking.number_of_people }}
+</td>
+<td>
+
+₹ {{ booking.total_amount }}
+
+</td>
 
 </tr>
 

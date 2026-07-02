@@ -35,6 +35,24 @@ User Management
 {% endblock %}
 {% block dashboard_content %}
 
+
+
+<form method="GET" class="mb-3">
+<div class="input-group">
+<input
+type="text"
+name="search"
+class="form-control"
+placeholder="Search user..."
+value="{{ search }}">
+<button class="btn btn-success">
+
+Search
+
+</button>
+</div>
+</form>
+
 <div class="table-card">
 
     <div class="table-header">
@@ -68,6 +86,25 @@ User Management
             <td>{{ user.phone }}</td>
 
             <td>
+
+                {% if user.is_active %}
+
+                    <a
+                    class="btn btn-danger btn-sm"
+                        href="{{ url_for('admin.toggle_user',user_id=user.id) }}">
+
+                            Deactivate
+
+                    </a>
+                {% else %}
+                    <a
+                    class="btn btn-success btn-sm"
+                        href="{{ url_for('admin.toggle_user',user_id=user.id) }}">
+
+                            Activate
+                    </a>
+                {% endif %}
+
 
                 {% if user.role=="ADMIN" %}
 

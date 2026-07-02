@@ -184,6 +184,19 @@ def reports():
 @login_required
 def all_treks():
 
+    search = request.args.get("search","")
+
+    treks = Trek.query
+
+    if search:
+        treks = treks.filter(
+            Trek.trek_name.ilike(f"%{search}%")
+        )
+
+    treks = treks.order_by(
+        Trek.start_date
+    ).all()
+
     treks = Trek.query.order_by(
         Trek.start_date
     ).all()
@@ -292,6 +305,19 @@ def delete_trek(trek_id):
 @login_required
 def staff():
 
+    search = request.args.get("search","")
+
+    staff_members = User.query.filter_by(
+        role="STAFF"
+    )
+
+    if search:
+        staff_members = staff_members.filter(
+            User.full_name.ilike(f"%{search}%")
+        )
+
+    staff_members = staff_members.all()
+
     if current_user.role != "ADMIN":
         return "Unauthorized", 403
 
@@ -331,14 +357,20 @@ def users():
 
     if current_user.role != "ADMIN":
         return "Unauthorized", 403
-
-    users = User.query.order_by(User.created_at.desc()).all()
-
+    search = request.args.get("search", "")
+    users = User.query
+    if search:
+        users = users.filter(
+            User.full_name.ilike(f"%{search}%")
+        )
+    users = users.order_by(
+        User.created_at.desc()
+    ).all()
     return render_template(
         "admin/users.html",
-        users=users
+        users=users,
+        search=search
     )
-
 @admin_bp.route("/treks/<int:trek_id>")
 @login_required
 def trek_details(trek_id):
@@ -351,4 +383,34 @@ def trek_details(trek_id):
     return render_template(
         "admin/trek_details.html",
         trek=trek
+    )
+
+
+@admin_bp.route("/users/toggle/<int:user_id>")
+@login_required
+def toggle_user(user_id):
+
+    if current_user.role != "ADMIN":
+        return "Unauthorized",403
+
+    user = User.query.get_or_404(user_id)
+    if user.is_active:
+        user.is_active = False
+
+        flash(
+            "User deactivated.",
+            "warning"
+        )
+
+    else:
+
+        user.is_active = True
+        flash(
+            "User activated.",
+            "success"
+        )
+
+    db.session.commit()
+    return redirect(
+        url_for("admin.users")
     )
