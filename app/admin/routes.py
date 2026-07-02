@@ -57,6 +57,14 @@ def dashboard():
         booking_status="CANCELLED"
     ).count()
 
+    recent_bookings = Booking.query.order_by(
+        Booking.booking_date.desc()
+    ).limit(5).all()
+
+    recent_users = User.query.order_by(
+        User.created_at.desc()
+    ).limit(3).all()
+
     return render_template(
         "admin/dashboard.html",
         total_users=total_users,
@@ -66,7 +74,9 @@ def dashboard():
         total_treks=total_treks,
         total_bookings=total_bookings,
         active_bookings=active_bookings,
-        cancelled_bookings=cancelled_bookings
+        cancelled_bookings=cancelled_bookings,
+        recent_bookings=recent_bookings,
+        recent_users=recent_users
     )
 
 @admin_bp.route("/treks/create", methods=["GET", "POST"])

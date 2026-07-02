@@ -301,4 +301,46 @@ Booking Overview
 </div>
 </div>
 
+<div class="card shadow mt-5">
+    <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">
+            <i class="bi bi-clock-history"></i>
+            Recent Bookings
+        </h4>
+
+    </div>
+    <div class="card-body">
+        {% if recent_bookings %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Trekker</th>
+                        <th>Trek</th>
+                        <th>Date</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+               {% for booking in recent_bookings %}
+                    <tr>
+
+                        <td>{{ booking.user.full_name }}</td>
+                        <td>{{ booking.trek.trek_name }}</td>
+                        <td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+
+            <p class="text-muted">
+                No bookings yet.
+            </p>
+        {% endif %}
+
+    </div>
+</div>
+
 {% endblock %}
