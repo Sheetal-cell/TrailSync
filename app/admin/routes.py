@@ -47,13 +47,26 @@ def dashboard():
 
     total_treks = Trek.query.count()
 
+    total_bookings = Booking.query.count()
+
+    active_bookings = Booking.query.filter_by(
+        booking_status="BOOKED"
+    ).count()
+
+    cancelled_bookings = Booking.query.filter_by(
+        booking_status="CANCELLED"
+    ).count()
+
     return render_template(
         "admin/dashboard.html",
         total_users=total_users,
         total_staff=total_staff,
         pending_staff=pending_staff,
         total_trekkers=total_trekkers,
-        total_treks=total_treks
+        total_treks=total_treks,
+        total_bookings=total_bookings,
+        active_bookings=active_bookings,
+        cancelled_bookings=cancelled_bookings
     )
 
 @admin_bp.route("/treks/create", methods=["GET", "POST"])
