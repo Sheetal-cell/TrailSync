@@ -331,27 +331,30 @@ def delete_trek(trek_id):
 @login_required
 def staff():
 
-    search = request.args.get("search","")
+    search = request.args.get("search", "")
 
-    staff_members = User.query.filter_by(
-        role="STAFF"
-    )
+    query = User.query.filter_by(role="STAFF")
 
     if search:
-        staff_members = staff_members.filter(
+        query = query.filter(
             User.full_name.ilike(f"%{search}%")
         )
 
-    staff_members = staff_members.all()
+    pending_staff = User.query.filter_by(
+        role="STAFF",
+        status="PENDING"
+        ).all()
 
-    if current_user.role != "ADMIN":
-        return "Unauthorized", 403
-
-    staff_members = User.query.filter_by(role="STAFF").all()
+    approved_staff = User.query.filter_by(
+        role="STAFF",
+        status="APPROVED",
+        is_active=True
+    ).all()
 
     return render_template(
         "admin/staff.html",
-        staff_members=staff_members
+        staff_members=pending_staff,
+        approved_staff=approved_staff
     )
 
 @admin_bp.route("/staff/approve/<int:user_id>")

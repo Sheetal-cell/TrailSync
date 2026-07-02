@@ -74,4 +74,137 @@ Approved
 {% endfor %}
 </tbody>
 </table>
+
+<hr class="my-5">
+
+<h2 class="mb-4">
+    Approved Staff
+</h2>
+
+<div class="row mb-3">
+
+    <div class="col-md-4">
+        <input
+            type="text"
+            id="staffSearch"
+            class="form-control"
+            placeholder="Search by name or email">
+    </div>
+
+    <div class="col-md-3">
+        <select
+            id="staffFilter"
+            class="form-select">
+
+            <option value="all">
+                All Staff
+            </option>
+
+            <option value="assigned">
+                Assigned
+            </option>
+
+            <option value="unassigned">
+                Unassigned
+            </option>
+
+        </select>
+    </div>
+
+</div>
+
+<table class="table table-hover shadow" id="staffTable">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Assigned Trek</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+<tbody>
+{% for staff in approved_staff %}
+
+<tr>
+<td>{{ staff.id }}</td>
+<td>{{ staff.full_name }}</td>
+<td>{{ staff.email }}</td>
+<td>
+
+{% if staff.assigned_treks %}
+{{ staff.assigned_treks[0].trek_name }}
+{% else %}
+-
+{% endif %}
+
+</td>
+<td>
+<span class="badge bg-success">
+
+Approved
+
+</span>
+</td>
+<td>
+
+<a
+href="{{ url_for('admin.toggle_user', user_id=staff.id) }}"
+class="btn btn-danger btn-sm">
+
+Deactivate
+</a>
+
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
 {% endblock %}
+
+<script>
+
+const search = document.getElementById("staffSearch");
+const filter = document.getElementById("staffFilter");
+
+function applyFilter() {
+
+    let text = search.value.toLowerCase();
+    let type = filter.value;
+
+    document.querySelectorAll("#staffTable tbody tr")
+    .forEach(function(row){
+
+        let rowText = row.innerText.toLowerCase();
+
+        let assigned =
+            row.cells[3].innerText.trim() !== "-";
+
+        let matchSearch =
+            rowText.includes(text);
+
+        let matchFilter = true;
+
+        if(type === "assigned")
+            matchFilter = assigned;
+
+        if(type === "unassigned")
+            matchFilter = !assigned;
+
+        row.style.display =
+            (matchSearch && matchFilter)
+            ? ""
+            : "none";
+    });
+}
+
+search.addEventListener("keyup", applyFilter);
+filter.addEventListener("change", applyFilter);
+
+</script>
