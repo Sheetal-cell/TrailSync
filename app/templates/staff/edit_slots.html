@@ -1,0 +1,61 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Update Slots
+{% endblock %}
+
+{% block heading %}
+Update Available Slots
+{% endblock %}
+
+{% block sidebar %}
+<a href="{{ url_for('staff.dashboard') }}">
+Dashboard
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-body">
+
+<h3 class="mb-4">
+{{ trek.trek_name }}
+</h3>
+<form method="POST">
+<div class="mb-3">
+
+<label class="form-label">
+Available Slots
+</label>
+
+<input
+type="number"
+name="slots"
+class="form-control"
+value="{{ trek.available_slots }}"
+required>
+
+</div>
+<button
+class="btn btn-success">
+
+Save Changes
+
+</button>
+
+<a
+href="{{ url_for('staff.trek_details', trek_id=trek.id) }}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+</form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

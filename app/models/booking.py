@@ -29,6 +29,11 @@ class Booking(db.Model):
         nullable=False,
         default="PENDING"
     )
+
+    attendance_status = db.Column(
+        db.String(20),
+        default="REGISTERED"
+    )
     number_of_people = db.Column(
         db.Integer,
         default=1

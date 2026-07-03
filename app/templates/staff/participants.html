@@ -1,0 +1,87 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Participants
+{% endblock %}
+
+{% block heading %}
+Participants
+{% endblock %}
+
+{% block sidebar %}
+<a href="{{ url_for('staff.dashboard') }}">
+Dashboard
+</a>
+{% endblock %}
+{% block dashboard_content %}
+
+<h2>
+{{ trek.trek_name }}
+</h2>
+
+<table class="table table-hover shadow">
+<thead>
+<tr>
+
+<th>Name</th>
+<th>Email</th>
+<th>Booking Date</th>
+<th>Status</th>
+<th>Payment</th>
+
+</tr>
+
+</thead>
+<tbody>
+
+{% for booking in trek.bookings %}
+
+<tr>
+<td>
+
+{{ booking.user.full_name }}
+
+</td>
+<td>
+
+{{ booking.user.email }}
+
+</td>
+<td>
+
+{{ booking.booking_date.strftime("%d-%m-%Y") }}
+
+</td>
+<td>
+
+<span class="badge bg-primary">
+
+{{ booking.booking_status }}
+
+</span>
+</td>
+<td>
+
+{% if booking.payment_status=="PAID" %}
+
+<span class="badge bg-success">
+Paid
+</span>
+
+{% else %}
+
+<span class="badge bg-warning">
+Pending
+</span>
+
+{% endif %}
+
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Update Status
+{% endblock %}
+
+{% block heading %}
+Update Trek Status
+{% endblock %}
+
+{% block sidebar %}
+<a href="{{ url_for('staff.dashboard') }}">
+Dashboard
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-body">
+
+<h3>
+{{ trek.trek_name }}
+</h3>
+
+<form method="POST">
+<div class="mb-3">
+<label class="form-label">
+
+Status
+
+</label>
+
+<select
+name="status"
+class="form-select">
+
+{% for status in ["OPEN","CLOSED","STARTED","ONGOING","COMPLETED"] %}
+
+<option
+value="{{ status }}"
+{% if trek.status==status %}selected{% endif %}>
+
+{{ status }}
+
+</option>
+
+{% endfor %}
+
+</select>
+</div>
+
+<button
+class="btn btn-success">
+
+Update Status
+
+</button>
+
+<a
+href="{{ url_for('staff.trek_details', trek_id=trek.id) }}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
