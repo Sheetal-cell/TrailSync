@@ -10,6 +10,53 @@ Explore Treks
 
 {% block sidebar %}
 
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <input
+            type="text"
+            name="location"
+            class="form-control"
+            placeholder="Search by location"
+            value="{{ location }}">
+
+    </div>
+
+    <div class="col-md-4">
+
+        <select
+            name="difficulty"
+            class="form-select">
+
+            <option value="">All Difficulty</option>
+
+            <option value="Easy"
+            {% if difficulty=="Easy" %}selected{% endif %}>
+            Easy
+            </option>
+
+            <option value="Moderate"
+            {% if difficulty=="Moderate" %}selected{% endif %}>
+            Moderate
+            </option>
+
+            <option value="Hard"
+            {% if difficulty=="Hard" %}selected{% endif %}>
+            Hard
+            </option>
+
+        </select>
+
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-success w-100">
+
+            <i class="bi bi-search"></i>
+
+            Search
+        </button>
+    </div>
+</form>
+
 <a class="active-menu"
 href="{{ url_for('trekker.dashboard') }}">
 <i class="bi bi-house"></i>

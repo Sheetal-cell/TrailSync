@@ -21,29 +21,34 @@ def dashboard():
     if current_user.role != "TREKKER":
         return "Unauthorized", 403
 
-    location = request.args.get("location", "")
     difficulty = request.args.get("difficulty", "")
+    location = request.args.get("location", "")
 
-    treks = Trek.query.filter_by(status="OPEN")
+    query = Trek.query.filter(
+        Trek.status == "OPEN",
+        Trek.available_slots > 0
+    )
+
+    if difficulty:
+        query = query.filter(
+            Trek.difficulty == difficulty
+        )
 
     if location:
-        treks = treks.filter(
+        query = query.filter(
             Trek.location.ilike(f"%{location}%")
         )
 
-    if difficulty:
-        treks = treks.filter_by(
-            difficulty=difficulty
-        )
-
-    treks = treks.all()
+    treks = query.all()
 
     return render_template(
         "trekker/dashboard.html",
         treks=treks,
-        location=location,
-        difficulty=difficulty
+        difficulty=difficulty,
+        location=location
     )
+
+
 @trekker_bp.route("/trek/<int:trek_id>")
 @login_required
 def trek_details(trek_id):
