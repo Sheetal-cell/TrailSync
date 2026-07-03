@@ -58,6 +58,12 @@ style="height:220px;object-fit:cover;">
 
 </p>
 <p>
+<b>Duration:</b>
+
+{{ booking.trek.duration }} Days
+
+</p>
+<p>
 <b>Booking Date:</b>
 {{ booking.booking_date.strftime('%d-%m-%Y') }}
 
@@ -65,17 +71,47 @@ style="height:220px;object-fit:cover;">
 <p>
 <b>Booking Status:</b>
 
-<span class="badge bg-success">
-{{ booking.booking_status }}
+{% if booking.booking_status == "BOOKED" %}
 
+<span class="badge bg-success">
+BOOKED
 </span>
+
+{% elif booking.booking_status == "CANCELLED" %}
+
+<span class="badge bg-danger">
+CANCELLED
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+{{ booking.booking_status }}
+</span>
+
+{% endif %}
 </p>
 <p>
 <b>Payment:</b>
-<span class="badge bg-warning text-dark">
-{{ booking.payment_status }}
+{% if booking.payment_status == "PAID" %}
 
+<span class="badge bg-success">
+PAID
 </span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+PENDING
+</span>
+
+{% endif %}
+</p>
+<p>
+<b>People:</b>
+
+{{ booking.number_of_people }}
+
 </p>
 <p>
 <b>Trek Status:</b>

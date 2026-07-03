@@ -13,7 +13,7 @@ from app.models import (
     Booking
 )
 from app.extensions import db
-from app.forms import ProfileForm
+from app.auth.forms import ProfileForm
 
 @trekker_bp.route("/dashboard")
 @login_required

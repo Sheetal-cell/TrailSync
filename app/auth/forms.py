@@ -11,6 +11,8 @@ from wtforms.validators import (
     Length,
     EqualTo
 )
+from wtforms import EmailField
+from wtforms.validators import Email
 
 class RegistrationForm(FlaskForm):
 
@@ -79,3 +81,27 @@ class LoginForm(FlaskForm):
     )
 
     submit = SubmitField("Login")
+
+
+class ProfileForm(FlaskForm):
+
+    full_name = StringField(
+        "Full Name",
+        validators=[DataRequired()]
+    )
+
+    email = EmailField(
+        "Email",
+        validators=[
+            DataRequired(),
+            Email()
+        ]
+    )
+
+    phone = StringField(
+        "Phone"
+    )
+
+    submit = SubmitField(
+        "Update Profile"
+    )
