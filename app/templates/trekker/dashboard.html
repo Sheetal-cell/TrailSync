@@ -28,6 +28,66 @@ Profile
 
 {% endblock %}
 {% block dashboard_content %}
+<form method="GET" class="row mb-4">
+
+<div class="col-md-5">
+
+<input
+type="text"
+name="location"
+class="form-control"
+placeholder="Search by location"
+value="{{ location }}">
+
+</div>
+
+<div class="col-md-4">
+
+<select
+name="difficulty"
+class="form-select">
+
+<option value="">
+All Difficulties
+</option>
+
+<option
+value="Easy"
+{% if difficulty=="Easy" %}
+selected
+{% endif %}>
+Easy
+</option>
+
+<option
+value="Moderate"
+{% if difficulty=="Moderate" %}
+selected
+{% endif %}>
+Moderate
+</option>
+
+<option
+value="Hard"
+{% if difficulty=="Hard" %}
+selected
+{% endif %}>
+Hard
+</option>
+
+</select>
+</div>
+<div class="col-md-3">
+
+<button
+class="btn btn-success w-100">
+<i class="bi bi-search"></i>
+
+Search
+
+</button>
+</div>
+</form>
 <div class="row">
 
 {% for trek in treks %}

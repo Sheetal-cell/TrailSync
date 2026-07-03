@@ -2,7 +2,8 @@ from flask import (
     render_template,
     redirect,
     url_for,
-    flash
+    flash,
+    request
 )
 from flask_login import login_required, current_user
 
@@ -20,17 +21,29 @@ def dashboard():
     if current_user.role != "TREKKER":
         return "Unauthorized", 403
 
-    treks = Trek.query.all()
+    location = request.args.get("location", "")
+    difficulty = request.args.get("difficulty", "")
 
-    print("Treks found:", len(treks))
-    for t in treks:
-        print(t.trek_name, t.status)
+    treks = Trek.query.filter_by(status="OPEN")
+
+    if location:
+        treks = treks.filter(
+            Trek.location.ilike(f"%{location}%")
+        )
+
+    if difficulty:
+        treks = treks.filter_by(
+            difficulty=difficulty
+        )
+
+    treks = treks.all()
 
     return render_template(
         "trekker/dashboard.html",
-        treks=treks
+        treks=treks,
+        location=location,
+        difficulty=difficulty
     )
-
 @trekker_bp.route("/trek/<int:trek_id>")
 @login_required
 def trek_details(trek_id):
