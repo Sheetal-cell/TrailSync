@@ -72,12 +72,40 @@ class="img-fluid rounded shadow">
 <p><strong>Slots Left</strong><br>{{ trek.available_slots }}</p>
 <p><strong>Start Date</strong><br>{{ trek.start_date }}</p>
 
+{% if trek.status=="OPEN" and trek.available_slots>0 %}
+
 <a
- href="{{ url_for('trekker.book_trek', trek_id=trek.id) }}"
-class="btn btn-success w-100">
-Book Now
+href="{{ url_for('trekker.book_trek',
+trek_id=trek.id) }}"
+class="btn btn-success btn-lg">
+
+<i class="bi bi-calendar-check"></i>
+
+Book This Trek
 
 </a>
+
+{% elif trek.available_slots==0 %}
+
+<button
+class="btn btn-danger btn-lg"
+disabled>
+
+No Slots Available
+
+</button>
+
+{% else %}
+
+<button
+class="btn btn-secondary btn-lg"
+disabled>
+
+Booking Closed
+
+</button>
+
+{% endif %}
 </div>
 </div>
 </div>

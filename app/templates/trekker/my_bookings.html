@@ -21,117 +21,110 @@ href="{{ url_for('trekker.my_bookings') }}">
     My Bookings
 </a>
 
+<a href="{{ url_for('trekker.history') }}">
+    <i class="bi bi-clock-history"></i>
+    Trek History
+</a>
+
 {% endblock %}
 
 {% block dashboard_content %}
 
-<div class="card shadow border-0">
-
-<div class="card-body">
-
-<h3 class="mb-4">
-My Trek Bookings
-</h3>
-
-{% if bookings %}
-
-<table class="table table-hover">
-
-<thead>
-
-<tr>
-
-<th>Trek</th>
-<th>Location</th>
-<th>Status</th>
-<th>Payment</th>
-<th>Date</th>
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody>
+<div class="row">
 
 {% for booking in bookings %}
 
-<tr>
+<div class="col-lg-6 mb-4">
 
-<td>{{ booking.trek.trek_name }}</td>
+<div class="card shadow h-100">
 
-<td>{{ booking.trek.location }}</td>
+<img
+src="{{ url_for('static',
+filename='uploads/' + booking.trek.image) }}"
+class="card-img-top"
+style="height:220px;object-fit:cover;">
 
-<td>
+<div class="card-body">
+<h4>{{ booking.trek.trek_name }}</h4>
+<p>
+<i class="bi bi-geo-alt"></i>
+{{ booking.trek.location }}
+
+</p>
+<p>
+<b>Start Date:</b>
+
+{{ booking.trek.start_date }}
+
+</p>
+<p>
+<b>Booking Date:</b>
+{{ booking.booking_date.strftime('%d-%m-%Y') }}
+
+</p>
+<p>
+<b>Booking Status:</b>
 
 <span class="badge bg-success">
+{{ booking.booking_status }}
 
-{% if booking.booking_status == "BOOKED" %}
-
-<span class="badge bg-success">
-BOOKED
 </span>
-{% else %}
-<span class="badge bg-danger">
-CANCELLED
-</span>
-{% endif %}
-</span>
-</td>
-<td>
-
+</p>
+<p>
+<b>Payment:</b>
 <span class="badge bg-warning text-dark">
-
 {{ booking.payment_status }}
 
 </span>
+</p>
+<p>
+<b>Trek Status:</b>
 
-</td>
+{% if booking.trek.status=="OPEN" %}
+<span class="badge bg-success">
+OPEN
+</span>
+{% elif booking.trek.status=="ONGOING" %}
 
-<td>
+<span class="badge bg-primary">
+ONGOING
+</span>
+{% elif booking.trek.status=="COMPLETED" %}
 
-{{ booking.booking_date.strftime("%d %b %Y") }}
+<span class="badge bg-dark">
+COMPLETED
+</span>
 
-</td>
-<td>
-{% if booking.booking_status == "BOOKED" %}
-<a
-href="{{ url_for('trekker.cancel_booking',
-booking_id=booking.id) }}"
-class="btn btn-danger btn-sm">
-Cancel
-
-</a>
 {% else %}
 
-<span class="text-muted">
-Cancelled
+<span class="badge bg-secondary">
+{{ booking.trek.status }}
 
 </span>
 {% endif %}
+</p>
 
-</td>
+<a
+href="{{ url_for('trekker.trek_details',
+trek_id=booking.trek.id) }}"
+class="btn btn-success w-100">
 
-</tr>
+View Trek
 
-{% endfor %}
-
-</tbody>
-
-</table>
+</a>
+</div>
+</div>
+</div>
 
 {% else %}
 
+<div class="col-12">
 <div class="alert alert-info">
 
 You haven't booked any treks yet.
 
 </div>
-
-{% endif %}
-
 </div>
-
+{% endfor %}
 </div>
-
 {% endblock %}

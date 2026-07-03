@@ -41,11 +41,16 @@ def dashboard():
 
     treks = query.all()
 
+    booking_count = Booking.query.filter_by(
+        user_id=current_user.id
+    ).count()
+
     return render_template(
         "trekker/dashboard.html",
         treks=treks,
         difficulty=difficulty,
-        location=location
+        location=location,
+        booking_count=booking_count
     )
 
 
