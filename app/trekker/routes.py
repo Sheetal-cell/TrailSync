@@ -69,6 +69,20 @@ def book_trek(trek_id):
 
     trek = Trek.query.get_or_404(trek_id)
 
+    if trek.status != "OPEN":
+
+        flash(
+            "This trek is not open for booking.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "trekker.trek_details",
+                trek_id=trek.id
+            )
+        )
+
     print("Booking trek:", trek.id)
 
     existing_booking = Booking.query.filter_by(
