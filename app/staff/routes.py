@@ -15,6 +15,9 @@ from app.models import (
     User
 )
 
+from app.forms import StaffProfileForm
+from app.models import StaffProfile
+
 @staff_bp.route("/dashboard")
 @login_required
 def dashboard():
@@ -144,6 +147,49 @@ def participants(trek_id):
     return render_template(
         "staff/participants.html",
         trek=trek
+    )
+
+
+@staff_bp.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+
+    profile = StaffProfile.query.filter_by(
+        user_id=current_user.id
+    ).first()
+
+    if not profile:
+
+        profile = StaffProfile(
+            user_id=current_user.id
+        )
+
+        db.session.add(profile)
+
+        db.session.commit()
+
+    form = StaffProfileForm(obj=profile)
+
+    if form.validate_on_submit():
+
+        profile.phone = form.phone.data
+
+        profile.bio = form.bio.data
+
+        db.session.commit()
+
+        flash(
+            "Profile updated successfully.",
+            "success"
+        )
+
+        return redirect(
+            url_for("staff.profile")
+        )
+
+    return render_template(
+        "staff/profile.html",
+        form=form
     )
 
 @staff_bp.route("/booking/<int:booking_id>/attendance/<status>")

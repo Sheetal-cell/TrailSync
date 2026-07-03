@@ -1,116 +1,182 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Staff Dashboard
+{% endblock %}
+
+{% block heading %}
+Staff Dashboard
+{% endblock %}
+
+{% block sidebar %}
+
+<a class="active-menu"
+href="{{ url_for('staff.dashboard') }}">
+    <i class="bi bi-house"></i>
+    Dashboard
+</a>
+
+<a href="{{ url_for('staff.profile') }}">
+    <i class="bi bi-person"></i>
+    My Profile
+</a>
+
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="hero-banner">
+
+    <div>
+
+        <h1>
+            Welcome,
+            {{ current_user.full_name }}
+        </h1>
+
+        <p>
+            Manage your assigned treks and participants.
+        </p>
+
+    </div>
+
+</div>
+
 <div class="stats-grid">
-<div class="stat-card">
-<div class="stat-icon">
-<i class="bi bi-map"></i>
-</div>
 
-<div class="stat-title">
+    <div class="stat-card">
 
-Assigned Treks
+        <div class="stat-icon">
+            <i class="bi bi-map"></i>
+        </div>
 
-</div>
-<div class="stat-value">
+        <div class="stat-title">
+            Assigned Treks
+        </div>
 
-{{ total_treks }}
+        <div class="stat-value">
+            {{ total_treks }}
+        </div>
 
-</div>
-</div>
+    </div>
 
-<div class="stat-card">
+    <div class="stat-card">
 
-<div class="stat-icon">
-<i class="bi bi-people"></i>
-</div>
+        <div class="stat-icon">
+            <i class="bi bi-people"></i>
+        </div>
 
-<div class="stat-title">
+        <div class="stat-title">
+            Registered Trekkers
+        </div>
 
-Registered Trekkers
+        <div class="stat-value">
+            {{ total_trekkers }}
+        </div>
 
-</div>
-<div class="stat-value">
+    </div>
 
-{{ total_trekkers }}
+    <div class="stat-card">
 
-</div>
-</div>
+        <div class="stat-icon">
+            <i class="bi bi-unlock"></i>
+        </div>
 
-<div class="stat-card">
+        <div class="stat-title">
+            Open Treks
+        </div>
 
-<div class="stat-icon">
-<i class="bi bi-unlock"></i>
-</div>
+        <div class="stat-value">
+            {{ open_treks }}
+        </div>
 
-<div class="stat-title">
-Open Treks
-</div>
-<div class="stat-value">
+    </div>
 
-{{ open_treks }}
+    <div class="stat-card">
 
-</div>
-</div>
+        <div class="stat-icon">
+            <i class="bi bi-check-circle"></i>
+        </div>
 
-<div class="stat-card">
+        <div class="stat-title">
+            Completed
+        </div>
 
-<div class="stat-icon">
-<i class="bi bi-check-circle"></i>
-</div>
+        <div class="stat-value">
+            {{ completed_treks }}
+        </div>
 
-<div class="stat-title">
-Completed
-</div>
+    </div>
 
-<div class="stat-value">
-{{ completed_treks }}
-
-</div>
-</div>
 </div>
 
 <hr class="my-5">
-<h3>
 
-My Assigned Treks
+<h3 class="mb-4">
+
+    My Assigned Treks
 
 </h3>
+
 <div class="row">
 
 {% for trek in assigned_treks %}
 
 <div class="col-lg-4 mb-4">
-<div class="card shadow h-100">
+
+<div class="card shadow border-0 h-100">
+
 <img
-src="{{ url_for('static',
-filename='uploads/' + trek.image) }}"
+src="{{ url_for('static', filename='uploads/' + trek.image) }}"
 class="card-img-top"
 style="height:220px;object-fit:cover;">
 
 <div class="card-body">
+
 <h4>
 
 {{ trek.trek_name }}
 
 </h4>
+
 <p>
 
-<b>Location:</b>
+<i class="bi bi-geo-alt"></i>
+
 {{ trek.location }}
 
 </p>
+
 <p>
+
 <b>Status:</b>
 
-<span class="badge bg-success">
+<span class="badge
+{% if trek.status == 'OPEN' %}
+bg-success
+{% elif trek.status == 'ONGOING' %}
+bg-warning text-dark
+{% elif trek.status == 'COMPLETED' %}
+bg-primary
+{% else %}
+bg-secondary
+{% endif %}
+">
+
 {{ trek.status }}
+
 </span>
 
 </p>
+
 <p>
-<b>Slots:</b>
+
+<b>Available Slots:</b>
 
 {{ trek.available_slots }}
 
 </p>
+
 <p>
 
 <b>Participants:</b>
@@ -120,8 +186,7 @@ style="height:220px;object-fit:cover;">
 </p>
 
 <a
-href="{{ url_for('staff.trek_details',
-trek_id=trek.id) }}"
+href="{{ url_for('staff.trek_details', trek_id=trek.id) }}"
 class="btn btn-success w-100">
 
 Manage Trek
@@ -129,7 +194,25 @@ Manage Trek
 </a>
 
 </div>
+
 </div>
+
 </div>
+
+{% else %}
+
+<div class="col-12">
+
+<div class="alert alert-info">
+
+No treks have been assigned to you yet.
+
+</div>
+
+</div>
+
 {% endfor %}
+
 </div>
+
+{% endblock %}
