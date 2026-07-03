@@ -1,67 +1,7 @@
-{% extends "layouts/dashboard_base.html" %}
-
-{% block title %}
-Staff Dashboard
-{% endblock %}
-
-{% block sidebar %}
-
-<a href="#">
-    <i class="bi bi-speedometer2"></i>
-    Dashboard
-</a>
-
-<a href="#">
-    <i class="bi bi-map"></i>
-    Assigned Treks
-</a>
-
-<a href="#">
-    <i class="bi bi-people"></i>
-    Participants
-</a>
-
-<a href="#">
-    <i class="bi bi-pencil-square"></i>
-    Update Trek
-</a>
-
-{% endblock %}
-
-{% block dashboard_content %}
-
-<div class="dashboard-header">
-
-<div>
-
-<h2>
-
-Welcome,
-
-{{ current_user.full_name }}
-
-</h2>
-
-<p>
-
-Manage your assigned treks efficiently.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="row g-4">
-
-<div class="col-md-4">
-
+<div class="stats-grid">
 <div class="stat-card">
-
-<div class="stat-number">
-
-0
-
+<div class="stat-icon">
+<i class="bi bi-map"></i>
 </div>
 
 <div class="stat-title">
@@ -69,75 +9,127 @@ Manage your assigned treks efficiently.
 Assigned Treks
 
 </div>
+<div class="stat-value">
+
+{{ total_treks }}
 
 </div>
-
 </div>
-
-<div class="col-md-4">
 
 <div class="stat-card">
 
-<div class="stat-number">
-
-0
-
+<div class="stat-icon">
+<i class="bi bi-people"></i>
 </div>
 
 <div class="stat-title">
 
-Participants
+Registered Trekkers
 
 </div>
+<div class="stat-value">
+
+{{ total_trekkers }}
 
 </div>
-
 </div>
-
-<div class="col-md-4">
 
 <div class="stat-card">
 
-<div class="stat-number">
-
-0
-
+<div class="stat-icon">
+<i class="bi bi-unlock"></i>
 </div>
 
 <div class="stat-title">
+Open Treks
+</div>
+<div class="stat-value">
 
-Completed Treks
+{{ open_treks }}
 
 </div>
-
 </div>
 
+<div class="stat-card">
+
+<div class="stat-icon">
+<i class="bi bi-check-circle"></i>
 </div>
 
+<div class="stat-title">
+Completed
 </div>
 
-<div class="quick-card">
+<div class="stat-value">
+{{ completed_treks }}
 
+</div>
+</div>
+</div>
+
+<hr class="my-5">
 <h3>
 
-Today's Tasks
+My Assigned Treks
 
 </h3>
+<div class="row">
 
-<hr>
+{% for trek in assigned_treks %}
 
+<div class="col-lg-4 mb-4">
+<div class="card shadow h-100">
+<img
+src="{{ url_for('static',
+filename='uploads/' + trek.image) }}"
+class="card-img-top"
+style="height:220px;object-fit:cover;">
+
+<div class="card-body">
+<h4>
+
+{{ trek.trek_name }}
+
+</h4>
 <p>
 
-• View Assigned Treks</p>
+<b>Location:</b>
+{{ trek.location }}
 
+</p>
+<p>
+<b>Status:</b>
+
+<span class="badge bg-success">
+{{ trek.status }}
+</span>
+
+</p>
+<p>
+<b>Slots:</b>
+
+{{ trek.available_slots }}
+
+</p>
 <p>
 
-• Update Trek Status</p>
+<b>Participants:</b>
 
-<p>
+{{ trek.bookings|length }}
 
-• Manage Participants</p>
+</p>
+
+<a
+href="{{ url_for('staff.trek_details',
+trek_id=trek.id) }}"
+class="btn btn-success w-100">
+
+Manage Trek
+
+</a>
 
 </div>
-
-{% endblock %}
+</div>
+</div>
+{% endfor %}
+</div>
