@@ -27,13 +27,38 @@ Dashboard
     Trek History
 </a>
 
-<a href="#">
+<a href="{{ url_for('trekker.profile') }}">
 <i class="bi bi-person"></i>
 Profile
 </a>
 
 {% endblock %}
 {% block dashboard_content %}
+
+<div class="card shadow border-0 mb-4">
+
+<div class="card-body">
+
+<h2>
+
+Welcome,
+
+{{ current_user.full_name }}
+
+👋
+
+</h2>
+
+<p class="text-muted">
+
+Explore adventures, book treks and track your journey.
+
+</p>
+
+</div>
+
+</div>
+
 <div class="row mb-4">
 <div class="col-md-4">
 <div class="card shadow border-0">

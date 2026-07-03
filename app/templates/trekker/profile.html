@@ -1,0 +1,76 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block heading %}
+My Profile
+{% endblock %}
+
+{% block sidebar %}
+
+<a href="{{ url_for('trekker.dashboard') }}">
+Dashboard
+</a>
+
+<a href="{{ url_for('trekker.my_bookings') }}">
+My Bookings
+</a>
+
+<a class="active-menu"
+href="{{ url_for('trekker.profile') }}">
+Profile
+</a>
+
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h3 class="mb-4">
+
+Update Profile
+
+</h3>
+
+<form method="POST">
+
+{{ form.hidden_tag() }}
+
+<div class="mb-3">
+
+{{ form.full_name.label }}
+
+{{ form.full_name(class="form-control") }}
+
+</div>
+
+<div class="mb-3">
+
+{{ form.email.label }}
+
+{{ form.email(class="form-control") }}
+
+</div>
+
+<div class="mb-3">
+
+{{ form.phone.label }}
+
+{{ form.phone(class="form-control") }}
+
+</div>
+
+{{ form.submit(class="btn btn-success") }}
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

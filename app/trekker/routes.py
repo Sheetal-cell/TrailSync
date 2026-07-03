@@ -13,6 +13,7 @@ from app.models import (
     Booking
 )
 from app.extensions import db
+from app.forms import ProfileForm
 
 @trekker_bp.route("/dashboard")
 @login_required
@@ -145,6 +146,37 @@ def my_bookings():
     return render_template(
         "trekker/my_bookings.html",
         bookings=bookings
+    )
+
+@trekker_bp.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+
+    if current_user.role != "TREKKER":
+        return "Unauthorized", 403
+
+    form = ProfileForm(obj=current_user)
+
+    if form.validate_on_submit():
+
+        current_user.full_name = form.full_name.data
+        current_user.email = form.email.data
+        current_user.phone = form.phone.data
+
+        db.session.commit()
+
+        flash(
+            "Profile updated successfully.",
+            "success"
+        )
+
+        return redirect(
+            url_for("trekker.profile")
+        )
+
+    return render_template(
+        "trekker/profile.html",
+        form=form
     )
 
 @trekker_bp.route("/history")
