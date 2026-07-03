@@ -22,65 +22,64 @@ Dashboard
 <table class="table table-hover shadow">
 <thead>
 <tr>
-
 <th>Name</th>
 <th>Email</th>
-<th>Booking Date</th>
-<th>Status</th>
+<th>Booking</th>
 <th>Payment</th>
-
+<th>Attendance</th>
+<th>Action</th>
 </tr>
-
 </thead>
 <tbody>
-
 {% for booking in trek.bookings %}
-
 <tr>
+
+<td>{{ booking.user.full_name }}</td>
+<td>{{ booking.user.email }}</td>
+<td>{{ booking.booking_status }}</td>
+<td>{{ booking.payment_status }}</td>
 <td>
 
-{{ booking.user.full_name }}
+<span class="badge bg-info">
 
-</td>
-<td>
-
-{{ booking.user.email }}
-
-</td>
-<td>
-
-{{ booking.booking_date.strftime("%d-%m-%Y") }}
-
-</td>
-<td>
-
-<span class="badge bg-primary">
-
-{{ booking.booking_status }}
+{{ booking.attendance_status }}
 
 </span>
 </td>
 <td>
+<div class="btn-group">
 
-{% if booking.payment_status=="PAID" %}
+<a
+class="btn btn-success btn-sm"
+href="{{ url_for('staff.update_attendance',
+booking_id=booking.id,
+status='CHECKED_IN') }}">
 
-<span class="badge bg-success">
-Paid
-</span>
+Check In
 
-{% else %}
+</a>
+<a
+class="btn btn-warning btn-sm"
+href="{{ url_for('staff.update_attendance',
+booking_id=booking.id,
+status='NO_SHOW') }}">
 
-<span class="badge bg-warning">
-Pending
-</span>
+No Show
 
-{% endif %}
+</a>
+<a
+class="btn btn-primary btn-sm"
+href="{{ url_for('staff.update_attendance',
+booking_id=booking.id,
+status='COMPLETED') }}">
 
+Complete
+
+</a>
+</div>
 </td>
 </tr>
-
 {% endfor %}
-
 </tbody>
 </table>
 

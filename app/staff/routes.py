@@ -146,3 +146,46 @@ def participants(trek_id):
         trek=trek
     )
 
+@staff_bp.route("/booking/<int:booking_id>/attendance/<status>")
+@login_required
+def update_attendance(booking_id, status):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.trek.assigned_staff_id != current_user.id:
+        return "Unauthorized", 403
+
+    allowed = [
+        "REGISTERED",
+        "CHECKED_IN",
+        "NO_SHOW",
+        "COMPLETED"
+    ]
+
+    if status not in allowed:
+        flash(
+            "Invalid attendance status.",
+            "danger"
+        )
+        return redirect(
+            url_for(
+                "staff.participants",
+                trek_id=booking.trek.id
+            )
+        )
+
+    booking.attendance_status = status
+
+    db.session.commit()
+
+    flash(
+        "Attendance updated successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "staff.participants",
+            trek_id=booking.trek.id
+        )
+    )
