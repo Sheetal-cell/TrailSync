@@ -137,6 +137,21 @@ def my_bookings():
         bookings=bookings
     )
 
+@trekker_bp.route("/history")
+@login_required
+def history():
+
+    bookings = Booking.query.filter_by(
+        user_id=current_user.id
+    ).order_by(
+        Booking.booking_date.desc()
+    ).all()
+
+    return render_template(
+        "trekker/history.html",
+        bookings=bookings
+    )
+
 @trekker_bp.route("/cancel-booking/<int:booking_id>")
 @login_required
 def cancel_booking(booking_id):
