@@ -112,14 +112,23 @@ def update_status(trek_id):
     if trek.assigned_staff_id != current_user.id:
         return "Unauthorized",403
 
-    if request.method=="POST":
+    if request.method == "POST":
 
         trek.status = request.form["status"]
+
+    # Automatically update booking statuses
+        if trek.status == "COMPLETED":
+
+            for booking in trek.bookings:
+
+                booking.booking_status = "COMPLETED"
+
+                booking.attendance_status = "COMPLETED"
 
         db.session.commit()
 
         flash(
-            "Status updated.",
+            "Trek status updated successfully.",
             "success"
         )
 
@@ -129,7 +138,6 @@ def update_status(trek_id):
                 trek_id=trek.id
             )
         )
-
     return render_template(
         "staff/update_status.html",
         trek=trek
