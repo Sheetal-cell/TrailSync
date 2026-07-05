@@ -103,26 +103,48 @@ def edit_slots(trek_id):
         trek=trek
     )
 
-@staff_bp.route("/trek/<int:trek_id>/status", methods=["GET","POST"])
+@staff_bp.route("/trek/<int:trek_id>/status", methods=["GET", "POST"])
 @login_required
 def update_status(trek_id):
 
     trek = Trek.query.get_or_404(trek_id)
 
     if trek.assigned_staff_id != current_user.id:
-        return "Unauthorized",403
+        return "Unauthorized", 403
+
+    allowed_statuses = [
+        "OPEN",
+        "ONGOING",
+        "CLOSED",
+        "COMPLETED"
+    ]
 
     if request.method == "POST":
 
-        trek.status = request.form["status"]
+        status = request.form["status"]
 
-    # Automatically update booking statuses
-        if trek.status == "COMPLETED":
+        if status not in allowed_statuses:
+
+            flash(
+                "Invalid trek status.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "staff.update_status",
+                    trek_id=trek.id
+                )
+            )
+
+        trek.status = status
+
+        # Automatically complete all bookings
+        if status == "COMPLETED":
 
             for booking in trek.bookings:
 
                 booking.booking_status = "COMPLETED"
-
                 booking.attendance_status = "COMPLETED"
 
         db.session.commit()
@@ -138,11 +160,12 @@ def update_status(trek_id):
                 trek_id=trek.id
             )
         )
+
     return render_template(
         "staff/update_status.html",
-        trek=trek
+        trek=trek,
+        allowed_statuses=allowed_statuses
     )
-
 @staff_bp.route("/trek/<int:trek_id>/participants")
 @login_required
 def participants(trek_id):

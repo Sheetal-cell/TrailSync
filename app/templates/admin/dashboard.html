@@ -210,6 +210,60 @@ Confirmed
 </div>
 {% endif %}
 
+<hr class="my-5">
+
+<h3 class="mb-4">
+Booking Analytics
+</h3>
+
+<div class="row g-4">
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <h6>Booked</h6>
+                <h2 class="text-success">
+                    {{ active_bookings }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <h6>Completed</h6>
+                <h2 class="text-primary">
+                    {{ completed_bookings }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <h6>Cancelled</h6>
+                <h2 class="text-danger">
+                    {{ cancelled_bookings }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <h6>Pending Payment</h6>
+                <h2 class="text-warning">
+                    {{ pending_payment }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <div class="row g-4 mb-5">
 
 <div class="col-lg-8">

@@ -57,6 +57,18 @@ def dashboard():
         booking_status="CANCELLED"
     ).count()
 
+    completed_bookings = Booking.query.filter_by(
+        booking_status="COMPLETED"
+    ).count()
+
+    pending_payment = Booking.query.filter_by(
+        payment_status="PENDING"
+    ).count()
+
+    paid_payment = Booking.query.filter_by(
+        payment_status="PAID"
+    ).count()
+
     recent_bookings = Booking.query.order_by(
         Booking.booking_date.desc()
     ).limit(5).all()
@@ -76,7 +88,10 @@ def dashboard():
         active_bookings=active_bookings,
         cancelled_bookings=cancelled_bookings,
         recent_bookings=recent_bookings,
-        recent_users=recent_users
+        recent_users=recent_users,
+        completed_bookings=completed_bookings,
+        pending_payment=pending_payment,
+        paid_payment=paid_payment,
     )
 
 @admin_bp.route("/treks/create", methods=["GET", "POST"])

@@ -37,17 +37,29 @@ Status
 name="status"
 class="form-select">
 
-{% for status in ["OPEN","CLOSED","STARTED","ONGOING","COMPLETED"] %}
-
 <option
-value="{{ status }}"
-{% if trek.status==status %}selected{% endif %}>
-
-{{ status }}
-
+value="OPEN"
+{% if trek.status=="OPEN" %}selected{% endif %}>
+OPEN
 </option>
 
-{% endfor %}
+<option
+value="ONGOING"
+{% if trek.status=="ONGOING" %}selected{% endif %}>
+ONGOING
+</option>
+
+<option
+value="CLOSED"
+{% if trek.status=="CLOSED" %}selected{% endif %}>
+CLOSED
+</option>
+
+<option
+value="COMPLETED"
+{% if trek.status=="COMPLETED" %}selected{% endif %}>
+COMPLETED
+</option>
 
 </select>
 </div>
