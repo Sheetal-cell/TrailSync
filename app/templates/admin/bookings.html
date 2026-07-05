@@ -91,75 +91,113 @@ Filter
 </button>
 </div>
 </form>
-<table class="table table-hover">
-
-<thead>
-
+<table class="table table-hover align-middle shadow">
+<thead class="table-dark">
 <tr>
-
-<th>ID</th>
-<th>Trekker</th>
+<th>#</th>
 <th>Trek</th>
-<th>Status</th>
+<th>Trekker</th>
+<th>Assigned Staff</th>
+<th>Trek Status</th>
+<th>Booking Status</th>
 <th>Payment</th>
-
-
-<th>Date</th>
-<th>Guide</th>
-<th>People</th>
-<th>Total</th>
+<th>Booked On</th>
 </tr>
-
 </thead>
+
 <tbody>
-
 {% for booking in bookings %}
-
 <tr>
-
 <td>{{ booking.id }}</td>
-
-<td>{{ booking.user.full_name }}</td>
-<td>{{ booking.trek.trek_name }}</td>
 <td>
-    {% if booking.booking_status=="BOOKED" %}
-
-    <span class="badge bg-success">
-        Booked
-    </span>
-
-    {% elif booking.booking_status=="CANCELLED" %}
-
-    <span class="badge bg-danger">
-Cancelled
-    </span>
-
-    {% else %}
-
-    <span class="badge bg-primary">
-        Completed
-    </span>
-
-    {% endif %}
+{{ booking.trek.trek_name }}
 </td>
-<td>{{ booking.payment_status }}</td>
-<td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+
+<td>
+{{ booking.user.full_name }}
+</td>
+
 <td>
 {% if booking.trek.assigned_staff %}
 {{ booking.trek.assigned_staff.full_name }}
 {% else %}
+
+<span class="text-muted">
 Not Assigned
+</span>
 {% endif %}
-</td>
-<td>
-{{ booking.number_of_people }}
+
 </td>
 <td>
 
-₹ {{ booking.total_amount }}
+{% if booking.trek.status=="OPEN" %}
+
+<span class="badge bg-success">
+OPEN
+</span>
+
+{% elif booking.trek.status=="ONGOING" %}
+<span class="badge bg-primary">
+ONGOING
+</span>
+
+{% elif booking.trek.status=="COMPLETED" %}
+
+<span class="badge bg-dark">
+COMPLETED
+</span>
+
+{% else %}
+
+<span class="badge bg-secondary">
+{{ booking.trek.status }}
+</span>
+
+{% endif %}
 
 </td>
+<td>
+{% if booking.booking_status=="BOOKED" %}
 
+<span class="badge bg-success">
+BOOKED
+</span>
+
+{% elif booking.booking_status=="CANCELLED" %}
+
+<span class="badge bg-danger">
+CANCELLED
+</span>
+
+{% elif booking.booking_status=="COMPLETED" %}
+
+<span class="badge bg-primary">
+COMPLETED
+</span>
+
+{% endif %}
+
+</td>
+<td>
+
+{% if booking.payment_status=="PAID" %}
+
+<span class="badge bg-success">
+PAID
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+PENDING
+</span>
+
+{% endif %}
+
+</td>
+<td>
+{{ booking.booking_date.strftime("%d-%m-%Y") }}
+</td>
 </tr>
 
 {% endfor %}

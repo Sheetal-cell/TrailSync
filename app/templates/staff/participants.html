@@ -19,34 +19,110 @@ Dashboard
 {{ trek.trek_name }}
 </h2>
 
-<table class="table table-hover shadow">
-<thead>
+<table class="table table-hover align-middle shadow">
+<thead class="table-success">
 <tr>
+
 <th>Name</th>
 <th>Email</th>
 <th>Booking</th>
 <th>Payment</th>
 <th>Attendance</th>
 <th>Action</th>
+
 </tr>
 </thead>
 <tbody>
+
 {% for booking in trek.bookings %}
+
 <tr>
 
-<td>{{ booking.user.full_name }}</td>
+<td>
+<strong>{{ booking.user.full_name }}</strong>
+</td>
+
 <td>{{ booking.user.email }}</td>
-<td>{{ booking.booking_status }}</td>
-<td>{{ booking.payment_status }}</td>
+
 <td>
 
-<span class="badge bg-info">
+{% if booking.booking_status == "BOOKED" %}
 
-{{ booking.attendance_status }}
+<span class="badge bg-success">
+BOOKED
+</span>
+{% elif booking.booking_status == "CANCELLED" %}
+<span class="badge bg-danger">
+
+CANCELLED
+</span>
+{% elif booking.booking_status == "COMPLETED" %}
+<span class="badge bg-primary">
+
+COMPLETED
 
 </span>
+
+{% else %}
+
+<span class="badge bg-secondary">
+{{ booking.booking_status }}
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if booking.payment_status == "PAID" %}
+
+<span class="badge bg-success">
+PAID
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+PENDING
+</span>
+
+{% endif %}
+</td>
+
+<td>
+
+{% if booking.attendance_status == "REGISTERED" %}
+
+<span class="badge bg-secondary">
+REGISTERED
+</span>
+
+{% elif booking.attendance_status == "CHECKED_IN" %}
+
+<span class="badge bg-success">
+CHECKED IN
+</span>
+
+{% elif booking.attendance_status == "NO_SHOW" %}
+
+<span class="badge bg-danger">
+NO SHOW
+</span>
+
+{% elif booking.attendance_status == "COMPLETED" %}
+
+<span class="badge bg-primary">
+COMPLETED
+</span>
+
+{% endif %}
+
 </td>
 <td>
+
+{% if booking.booking_status != "CANCELLED" %}
+
 <div class="btn-group">
 
 <a
@@ -56,8 +132,8 @@ booking_id=booking.id,
 status='CHECKED_IN') }}">
 
 Check In
-
 </a>
+
 <a
 class="btn btn-warning btn-sm"
 href="{{ url_for('staff.update_attendance',
@@ -65,8 +141,8 @@ booking_id=booking.id,
 status='NO_SHOW') }}">
 
 No Show
-
 </a>
+
 <a
 class="btn btn-primary btn-sm"
 href="{{ url_for('staff.update_attendance',
@@ -77,10 +153,20 @@ Complete
 
 </a>
 </div>
+
+{% else %}
+
+<span class="text-muted">
+Cancelled
+</span>
+
+{% endif %}
+
 </td>
 </tr>
+
 {% endfor %}
+
 </tbody>
 </table>
-
 {% endblock %}
