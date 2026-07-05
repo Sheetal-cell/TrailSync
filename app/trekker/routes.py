@@ -96,10 +96,10 @@ def book_trek(trek_id):
 
     print("Booking trek:", trek.id)
 
-    existing_booking = Booking.query.filter_by(
-        user_id=current_user.id,
-        trek_id=trek.id,
-        booking_status="BOOKED"
+    existing_booking = Booking.query.filter(
+        Booking.user_id == current_user.id,
+        Booking.trek_id == trek.id,
+        Booking.booking_status != "CANCELLED"
     ).first()
 
     if existing_booking:
@@ -148,6 +148,43 @@ def my_bookings():
         bookings=bookings
     )
 
+
+@trekker_bp.route("/booking/<int:booking_id>/cancel")
+@login_required
+def cancel_booking(booking_id):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.user_id != current_user.id:
+        return "Unauthorized", 403
+
+    # Don't allow cancellation after trek has started
+    if booking.trek.status in ["ONGOING", "COMPLETED"]:
+
+        flash(
+            "This booking can no longer be cancelled.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("trekker.my_bookings")
+        )
+
+    booking.booking_status = "CANCELLED"
+
+    booking.trek.available_slots += booking.number_of_people
+
+    db.session.commit()
+
+    flash(
+        "Booking cancelled successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for("trekker.my_bookings")
+    )
+
 @trekker_bp.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
@@ -194,36 +231,3 @@ def history():
         bookings=bookings
     )
 
-@trekker_bp.route("/cancel-booking/<int:booking_id>")
-@login_required
-def cancel_booking(booking_id):
-
-    booking = Booking.query.get_or_404(booking_id)
-
-    if booking.user_id != current_user.id:
-        return "Unauthorized", 403
-
-    if booking.booking_status == "CANCELLED":
-
-        flash(
-            "Booking already cancelled.",
-            "warning"
-        )
-
-        return redirect(
-            url_for("trekker.my_bookings")
-        )
-
-    booking.booking_status = "CANCELLED"
-    booking.trek.available_slots += 1
-
-    db.session.commit()
-
-    flash(
-        "Booking cancelled successfully.",
-        "success"
-    )
-
-    return redirect(
-        url_for("trekker.my_bookings")
-    )

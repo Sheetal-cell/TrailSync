@@ -84,11 +84,31 @@ CANCELLED
 </span>
 
 {% else %}
+{% if booking.booking_status=="BOOKED" %}
 
-<span class="badge bg-warning text-dark">
+<span class="badge bg-success">
+BOOKED
+</span>
+
+{% elif booking.booking_status=="CANCELLED" %}
+
+<span class="badge bg-danger">
+CANCELLED
+</span>
+
+{% elif booking.booking_status=="COMPLETED" %}
+
+<span class="badge bg-primary">
+COMPLETED
+</span>
+
+{% else %}
+
+<span class="badge bg-secondary">
 {{ booking.booking_status }}
 </span>
 
+{% endif %}
 {% endif %}
 </p>
 <p>
@@ -140,14 +160,32 @@ COMPLETED
 {% endif %}
 </p>
 
+<div class="d-grid gap-2">
+
 <a
 href="{{ url_for('trekker.trek_details',
 trek_id=booking.trek.id) }}"
-class="btn btn-success w-100">
+class="btn btn-success">
 
 View Trek
 
 </a>
+
+{% if booking.booking_status=="BOOKED"
+and booking.trek.status=="OPEN" %}
+
+<a
+href="{{ url_for('trekker.cancel_booking',
+booking_id=booking.id) }}"
+class="btn btn-outline-danger">
+
+Cancel Booking
+
+</a>
+
+{% endif %}
+
+</div>
 </div>
 </div>
 </div>
