@@ -77,6 +77,20 @@ def dashboard():
         User.created_at.desc()
     ).limit(3).all()
 
+    chart_labels = [
+        "Treks",
+        "Bookings",
+        "Trekkers",
+        "Staff"
+    ]
+
+    chart_values = [
+        total_treks,
+        total_bookings,
+        total_trekkers,
+        total_staff
+    ]
+
     return render_template(
         "admin/dashboard.html",
         total_users=total_users,
@@ -92,6 +106,8 @@ def dashboard():
         completed_bookings=completed_bookings,
         pending_payment=pending_payment,
         paid_payment=paid_payment,
+        chart_labels=chart_labels,
+        chart_values=chart_values
     )
 
 @admin_bp.route("/treks/create", methods=["GET", "POST"])
