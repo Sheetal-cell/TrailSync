@@ -7,26 +7,34 @@ from wtforms import (
     SelectField,
     SubmitField
 )
-from wtforms.validators import DataRequired
+from wtforms.validators import (
+    DataRequired,
+    Length,
+    NumberRange
+)
 from flask_wtf.file import (
     FileField,
     MultipleFileField,
     FileAllowed
 )
 
-from app.models import User
-
 
 class TrekForm(FlaskForm):
 
     trek_name = StringField(
         "Trek Name",
-        validators=[DataRequired()]
+        validators=[
+            DataRequired(),
+            Length(min=3, max=100)
+        ]
     )
 
     location = StringField(
         "Location",
-        validators=[DataRequired()]
+        validators=[
+            DataRequired(),
+            Length(min=3, max=100)
+        ]
     )
 
     difficulty = SelectField(
@@ -35,17 +43,24 @@ class TrekForm(FlaskForm):
             ("Easy", "Easy"),
             ("Moderate", "Moderate"),
             ("Hard", "Hard")
-        ]
+        ],
+        validators=[DataRequired()]
     )
 
     duration = IntegerField(
         "Duration (Days)",
-        validators=[DataRequired()]
+        validators=[
+            DataRequired(),
+            NumberRange(min=1, max=30)
+        ]
     )
 
     available_slots = IntegerField(
         "Available Slots",
-        validators=[DataRequired()]
+        validators=[
+            DataRequired(),
+            NumberRange(min=1, max=500)
+        ]
     )
 
     start_date = DateField(
@@ -80,11 +95,16 @@ class TrekForm(FlaskForm):
 
     assigned_staff = SelectField(
         "Assign Staff",
-        coerce=int
+        coerce=int,
+        validators=[DataRequired()]
     )
 
     description = TextAreaField(
-        "Description"
+        "Description",
+        validators=[
+            DataRequired(),
+            Length(min=20, max=1000)
+        ]
     )
 
     submit = SubmitField(

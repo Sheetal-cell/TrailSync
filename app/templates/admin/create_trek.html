@@ -18,44 +18,73 @@ Create Trek
 
 <div class="row g-4 mb-5">
 
-<div class="col-md-6 mb-3">
 {{ form.trek_name.label(class="form-label") }}
-{{ form.trek_name(class="form-control") }}
-</div>
+{{ form.trek_name(
+    class="form-control",
+    required=True,
+    minlength="3",
+    maxlength="100"
+) }}
 
 <div class="col-md-6 mb-3">
 {{ form.location.label(class="form-label") }}
-{{ form.location(class="form-control") }}
+{{ form.location(
+    class="form-control",
+    required=True
+) }}
 </div>
 
 <div class="col-md-6 mb-3">
 {{ form.difficulty.label(class="form-label") }}
-{{ form.difficulty(class="form-select") }}
+{{ form.difficulty(
+    class="form-select",
+    required=True
+) }}
 </div>
 
 <div class="col-md-6 mb-3">
 {{ form.duration.label(class="form-label") }}
-{{ form.duration(class="form-control") }}
+{{ form.duration(
+    class="form-control",
+    required=True,
+    min="1",
+    max="30"
+) }}
 </div>
 
 <div class="col-md-6 mb-3">
 {{ form.available_slots.label(class="form-label") }}
-{{ form.available_slots(class="form-control") }}
+{{ form.available_slots(
+    class="form-control",
+    required=True,
+    min="1",
+    max="500"
+) }}
 </div>
 
 <div class="col-md-6 mb-3">
 {{ form.start_date.label(class="form-label") }}
-{{ form.start_date(class="form-control") }}
+{{ form.start_date(
+    class="form-control",
+    required=True
+) }}
 </div>
 
 <div class="col-md-6 mb-3">
 {{ form.end_date.label(class="form-label") }}
-{{ form.end_date(class="form-control") }}
+{{ form.end_date(
+    class="form-control",
+    required=True
+) }}
 </div>
 
 <div class="mb-3">
-    {{ form.image.label }}
-    {{ form.image(class="form-control") }}
+    {{ form.gallery.label(class="form-label") }}
+
+{{ form.gallery(
+    class="form-control",
+    accept="image/*"
+) }}
 </div>
 
 <div class="mb-3">
@@ -75,14 +104,20 @@ Create Trek
 {{ form.assigned_staff.label }}
 
 {{ form.assigned_staff(
-class="form-select"
+    class="form-select",
+    required=True
 ) }}
-
 </div>
 
 <div class="col-12 mb-3">
 {{ form.description.label(class="form-label") }}
-{{ form.description(class="form-control", rows=5) }}
+
+{{ form.description(
+    class="form-control",
+    rows=5,
+    required=True,
+    minlength="20"
+) }}
 </div>
 
 <div class="text-end">

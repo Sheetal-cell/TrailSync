@@ -16,6 +16,7 @@ from app.models import (
     Booking
 )
 import os
+from datetime import date
 
 from flask import current_app
 from werkzeug.utils import secure_filename
@@ -118,6 +119,7 @@ def create_trek():
         return "Unauthorized", 403
 
     form = TrekForm()
+
     staff = User.query.filter_by(
         role="STAFF",
         status="APPROVED"
@@ -125,22 +127,62 @@ def create_trek():
 
     form.assigned_staff.choices = [
         (0, "No Staff")
-    ]
-
-    form.assigned_staff.choices += [
+    ] + [
         (s.id, s.full_name)
         for s in staff
     ]
 
     if form.validate_on_submit():
 
+        # End date validation
+        if form.end_date.data < form.start_date.data:
+            flash(
+                "End date cannot be before start date.",
+                "danger"
+            )
+            return render_template(
+                "admin/create_trek.html",
+                form=form
+            )
+
+        # Past date validation
+        if form.start_date.data < date.today():
+            flash(
+                "Start date cannot be in the past.",
+                "danger"
+            )
+            return render_template(
+                "admin/create_trek.html",
+                form=form
+            )
+
+        # Duplicate trek validation
+        existing = Trek.query.filter_by(
+            trek_name=form.trek_name.data,
+            location=form.location.data,
+            start_date=form.start_date.data
+        ).first()
+
+        if existing:
+            flash(
+                "A trek with the same name, location and start date already exists.",
+                "danger"
+            )
+            return render_template(
+                "admin/create_trek.html",
+                form=form
+            )
+
+        # Upload cover image
         cover_image = None
 
         if form.image.data:
 
             file = form.image.data
 
-            filename = secure_filename(file.filename)
+            filename = secure_filename(
+                file.filename
+            )
 
             file.save(
                 os.path.join(
@@ -151,6 +193,7 @@ def create_trek():
 
             cover_image = filename
 
+        # Create trek
         trek = Trek(
 
             trek_name=form.trek_name.data,
@@ -162,6 +205,7 @@ def create_trek():
             end_date=form.end_date.data,
             description=form.description.data,
             status="OPEN",
+
             assigned_staff_id=(
                 form.assigned_staff.data
                 if form.assigned_staff.data != 0
@@ -173,9 +217,9 @@ def create_trek():
         )
 
         db.session.add(trek)
-
         db.session.commit()
 
+        # Upload gallery images
         if form.gallery.data:
 
             for file in form.gallery.data:
@@ -193,28 +237,29 @@ def create_trek():
                         filename
                     )
                 )
-                
+
                 gallery = TrekGallery(
                     trek_id=trek.id,
                     image=filename
                 )
 
                 db.session.add(gallery)
+
         db.session.commit()
 
         flash(
             "Trek created successfully!",
             "success"
         )
+
         return redirect(
             url_for("admin.all_treks")
         )
+
     return render_template(
         "admin/create_trek.html",
         form=form
     )
-
-
 
 @admin_bp.route("/reports")
 @login_required
