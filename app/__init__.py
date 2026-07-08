@@ -8,6 +8,8 @@ from app.auth import auth_bp
 from app.admin import admin_bp
 from app.staff import staff_bp
 from app.user import user_bp
+from app.api import api_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -40,9 +42,14 @@ def create_app():
     )
     app.register_blueprint(staff_bp)
     app.register_blueprint(user_bp)
+    app.register_blueprint(
+        api_bp,
+        url_prefix="/api"
+    )
 
     return app
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
