@@ -214,5 +214,53 @@ No treks have been assigned to you yet.
 {% endfor %}
 
 </div>
+<div class="card shadow">
+    <div class="card-body text-center">
+
+        <h4 class="mb-4">
+            Participants Per Trek
+        </h4>
+
+        <div style="width:350px; height:350px; margin:auto;">
+            <canvas id="staffChart"></canvas>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+
+<script id="staff-chart-data" type="application/json">
+{
+    "labels": {{ chart_labels|tojson }},
+    "values": {{ chart_values|tojson }}
+}
+</script>
+
+<script>
+
+const staffData = JSON.parse(
+    document.getElementById("staff-chart-data").textContent
+);
+
+new Chart(document.getElementById("staffChart"),{
+
+    type:"pie",
+
+    data:{
+        labels:staffData.labels,
+        datasets:[{
+            data:staffData.values
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false
+    }
+
+});
+
+</script>
 
 {% endblock %}

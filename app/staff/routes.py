@@ -45,6 +45,15 @@ def dashboard():
         len(trek.bookings)
         for trek in assigned_treks
     )
+    chart_labels = [
+        trek.trek_name
+        for trek in assigned_treks
+    ]
+
+    chart_values = [
+        len(trek.bookings)
+        for trek in assigned_treks
+    ]
 
     return render_template(
         "staff/dashboard.html",
@@ -52,7 +61,9 @@ def dashboard():
         total_treks=total_treks,
         open_treks=open_treks,
         completed_treks=completed_treks,
-        total_trekkers=total_trekkers
+        total_trekkers=total_trekkers,
+        chart_labels=chart_labels,
+        chart_values=chart_values
     )
 
 @staff_bp.route("/trek/<int:trek_id>")
