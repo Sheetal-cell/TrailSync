@@ -184,4 +184,78 @@ View Trek
 </div>
 {% endfor %}
 </div>
+<hr class="my-5">
+
+<div class="card shadow">
+    <div class="card-body">
+        <h4 class="mb-4">
+            My Booking Trend
+        </h4>
+
+        <canvas id="userChart"></canvas>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+
+<script id="user-chart-data" type="application/json">
+{
+    "labels": {{ chart_labels|tojson }},
+    "values": {{ chart_values|tojson }}
+}
+</script>
+
+<script>
+
+const userData = JSON.parse(
+    document.getElementById("user-chart-data").textContent
+);
+
+new Chart(document.getElementById("userChart"), {
+
+    type: "line",
+
+    data: {
+
+        labels: userData.labels,
+
+        datasets: [{
+
+            label: "Bookings",
+
+            data: userData.values,
+
+            fill: false,
+
+            tension: 0.3
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true,
+
+                ticks: {
+
+                    precision: 0
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
 {% endblock %}

@@ -46,12 +46,29 @@ def dashboard():
         user_id=current_user.id
     ).count()
 
+    bookings = Booking.query.filter_by(
+        user_id=current_user.id
+    ).order_by(
+        Booking.booking_date
+    ).all()
+
+    chart_labels = [
+        booking.booking_date.strftime("%d %b")
+        for booking in bookings
+    ]
+
+    chart_values = list(
+        range(1, len(bookings) + 1)
+    )
+
     return render_template(
         "trekker/dashboard.html",
         treks=treks,
         difficulty=difficulty,
         location=location,
-        booking_count=booking_count
+        booking_count=booking_count,
+        chart_labels=chart_labels,
+        chart_values=chart_values
     )
 
 
