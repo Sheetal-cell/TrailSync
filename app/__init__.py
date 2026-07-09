@@ -31,6 +31,11 @@ def create_app():
         response.headers["Pragma"] = "no-cache"
 
         response.headers["Expires"] = "0"
+        response.headers["X-Frame-Options"] = "DENY"
+
+        response.headers["X-Content-Type-Options"] = "nosniff"
+
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
 
         return response
 
