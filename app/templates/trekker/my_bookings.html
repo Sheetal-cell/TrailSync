@@ -31,7 +31,7 @@ href="{{ url_for('trekker.my_bookings') }}">
 {% block dashboard_content %}
 
 <div class="row">
-
+{% if bookings %}
 {% for booking in bookings %}
 
 <div class="col-lg-6 mb-4">
@@ -71,19 +71,6 @@ style="height:220px;object-fit:cover;">
 <p>
 <b>Booking Status:</b>
 
-{% if booking.booking_status == "BOOKED" %}
-
-<span class="badge bg-success">
-BOOKED
-</span>
-
-{% elif booking.booking_status == "CANCELLED" %}
-
-<span class="badge bg-danger">
-CANCELLED
-</span>
-
-{% else %}
 {% if booking.booking_status=="BOOKED" %}
 
 <span class="badge bg-success">
@@ -109,21 +96,45 @@ COMPLETED
 </span>
 
 {% endif %}
-{% endif %}
 </p>
 <p>
 <b>Payment:</b>
+
 {% if booking.payment_status == "PAID" %}
 
 <span class="badge bg-success">
 PAID
 </span>
 
+<br>
+
+<small class="text-muted">
+Method:
+{{ booking.payment_method }}
+</small>
+
+<br>
+
+<small class="text-muted">
+Transaction:
+{{ booking.payment_transaction_id }}
+</small>
+
 {% else %}
 
 <span class="badge bg-warning text-dark">
 PENDING
 </span>
+
+<br><br>
+
+<a
+href="{{ url_for('trekker.payment', booking_id=booking.id) }}"
+class="btn btn-success btn-sm">
+
+Pay Now
+
+</a>
 
 {% endif %}
 </p>
@@ -190,15 +201,18 @@ Cancel Booking
 </div>
 </div>
 
+{% endfor %}
+
 {% else %}
 
 <div class="col-12">
-<div class="alert alert-info">
+    <div class="alert alert-info">
+        You haven't booked any treks yet.
+    </div>
+</div>
 
-You haven't booked any treks yet.
+{% endif %}
 
 </div>
-</div>
-{% endfor %}
-</div>
+
 {% endblock %}

@@ -43,6 +43,24 @@ class Booking(db.Model):
         default=0.0
     )
 
+    payment_method = db.Column(
+    db.String(30),
+    default="NONE"
+)
+
+    payment_transaction_id = db.Column(
+        db.String(100)
+    )
+
+    payment_date = db.Column(
+        db.DateTime
+    )
+
+    payment_amount = db.Column(
+        db.Float,
+        default=0
+    )
+
     user = db.relationship(
         "User",
         back_populates="bookings"

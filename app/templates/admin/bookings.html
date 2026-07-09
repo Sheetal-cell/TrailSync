@@ -102,6 +102,7 @@ Filter
 <th>Trek Status</th>
 <th>Booking Status</th>
 <th>Payment</th>
+<th>Transaction</th>
 <th>Booked On</th>
 </tr>
 </thead>
@@ -194,6 +195,11 @@ PENDING
 </span>
 
 {% endif %}
+
+</td>
+<td>
+
+{{ booking.transaction_id }}
 
 </td>
 <td>

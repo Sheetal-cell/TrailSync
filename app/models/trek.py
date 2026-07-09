@@ -74,6 +74,12 @@ class Trek(db.Model):
         cascade="all, delete-orphan"
     )
 
+    price = db.Column(
+        db.Float,
+        nullable=False,
+        default=1000
+    )
+
     gallery = db.relationship(
         "TrekGallery",
         back_populates="trek",

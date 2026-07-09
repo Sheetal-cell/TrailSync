@@ -1,0 +1,54 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block dashboard_content %}
+
+<div class="container">
+
+<div class="card shadow p-4">
+
+<h2>Complete Payment</h2>
+
+<hr>
+
+<h4>{{ booking.trek.trek_name }}</h4>
+
+<p>Booking ID: {{ booking.id }}</p>
+
+<h3>₹2500</h3>
+
+<div class="mt-4">
+
+<h5>Select Payment Method</h5>
+
+<a href="{{ url_for('trekker.payment_success',
+    booking_id=booking.id,
+    method='Google Pay') }}"
+class="btn btn-success">
+    Pay with GPay
+</a>
+
+<a href="{{ url_for('trekker.payment_success',
+    booking_id=booking.id,
+    method='PhonePe') }}"
+class="btn btn-primary">
+    Pay with PhonePe
+</a>
+
+<a href="{{ url_for('trekker.payment_success',
+    booking_id=booking.id,
+    method='UPI') }}"
+class="btn btn-primary">
+    Pay with UPI
+</a>
+
+</div>
+
+<br>
+
+
+
+</div>
+
+</div>
+
+{% endblock %}

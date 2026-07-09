@@ -14,7 +14,10 @@ from app.models import (
 )
 from app.extensions import db
 from app.auth.forms import ProfileForm
-
+from app.trekker.forms import PaymentForm
+import random
+import string
+from datetime import datetime, date
 @trekker_bp.route("/dashboard")
 @login_required
 def dashboard():
@@ -248,3 +251,48 @@ def history():
         bookings=bookings
     )
 
+def generate_transaction():
+
+    return "TXN" + ''.join(
+        random.choices(
+            string.ascii_uppercase + string.digits,
+            k=12
+
+        )
+
+    )
+
+@trekker_bp.route("/payment/<int:booking_id>")
+@login_required
+def payment(booking_id):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.user_id != current_user.id:
+        return "Unauthorized", 403
+
+    return render_template(
+        "trekker/payment.html",
+        booking=booking
+    )
+
+@trekker_bp.route("/payment/success/<int:booking_id>/<method>")
+@login_required
+def payment_success(booking_id, method):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.user_id != current_user.id:
+        return "Unauthorized", 403
+
+    booking.payment_status = "PAID"
+    booking.payment_method = method
+    booking.payment_transaction_id = generate_transaction()
+    booking.payment_amount = booking.total_amount
+    booking.payment_date = datetime.utcnow()
+
+    db.session.commit()
+
+    flash("Payment Successful!", "success")
+
+    return redirect(url_for("trekker.my_bookings"))
