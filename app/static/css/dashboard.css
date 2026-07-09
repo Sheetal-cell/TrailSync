@@ -905,3 +905,211 @@ transform:scale(1.01);
     background:#f6f8fb;
 
 }
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat-card{
+    border-radius:16px;
+    padding:22px;
+}
+
+.hero-banner{
+    flex-wrap:wrap;
+}
+
+@media(max-width:992px){
+
+.sidebar{
+
+position:relative;
+width:100%;
+height:auto;
+
+}
+
+.main-content{
+
+margin-left:0;
+
+}
+
+}
+
+/* ===========================
+   Tablet (<= 992px)
+=========================== */
+
+@media (max-width: 992px) {
+
+    .sidebar{
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 20px;
+    }
+
+    .main-content{
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .topbar{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .top-right{
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .search-container{
+        width: 100%;
+    }
+
+    .search-container input{
+        width: 100%;
+    }
+
+    .hero-banner{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .stats-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .quick-actions{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .quick-actions .action-btn{
+        flex: 1 1 45%;
+    }
+
+    table{
+        font-size: 14px;
+    }
+
+    .card-body{
+        overflow-x: auto;
+    }
+
+}
+
+/* ===========================
+   Mobile (<= 768px)
+=========================== */
+
+@media (max-width:768px){
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title{
+        font-size:24px;
+    }
+
+    .page-subtitle{
+        font-size:14px;
+    }
+
+    .hero-banner h1{
+        font-size:26px;
+    }
+
+    .stat-card{
+        padding:18px;
+    }
+
+    .stat-value{
+        font-size:30px;
+    }
+
+    .top-right{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .profile-menu{
+        justify-content:center;
+    }
+
+    .quick-actions{
+        flex-direction:column;
+    }
+
+    .quick-actions .action-btn{
+        width:100%;
+    }
+
+    img.card-img-top{
+        height:200px !important;
+    }
+
+    .table{
+        font-size:13px;
+    }
+
+    .btn{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+}
+
+/* ===========================
+   Small Phones (<= 480px)
+=========================== */
+
+@media (max-width:480px){
+
+    body{
+        font-size:14px;
+    }
+
+    .page-title{
+        font-size:20px;
+    }
+
+    .hero-banner h1{
+        font-size:22px;
+    }
+
+    .stat-value{
+        font-size:26px;
+    }
+
+    .stat-title{
+        font-size:14px;
+    }
+
+    .card{
+        margin-bottom:20px;
+    }
+
+    .logo-text{
+        font-size:22px;
+    }
+
+    .sidebar{
+        padding:15px;
+    }
+
+    .main-content{
+        padding:15px;
+    }
+
+}

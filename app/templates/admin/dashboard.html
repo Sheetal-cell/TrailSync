@@ -367,7 +367,9 @@ Booking Overview
     </div>
     <div class="card-body">
         {% if recent_bookings %}
-            <table class="table table-hover">
+            <div class="table-responsive">
+            <div class="table-responsive">    
+            <table class="table table-hover align-middle">
                 <thead>
                     <tr>
                         <th>Trekker</th>
@@ -388,6 +390,8 @@ Booking Overview
                 {% endfor %}
                 </tbody>
             </table>
+            </div>
+            </div>
 
         {% else %}
 
