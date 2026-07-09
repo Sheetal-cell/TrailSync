@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,flash,redirect,url_for
 from config import Config
 from app.extensions import db
 from app.models import User,Trek
@@ -68,3 +68,15 @@ def create_app():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
+@login_manager.unauthorized_handler
+def unauthorized():
+
+    flash(
+        "Please login first.",
+        "warning"
+    )
+
+    return redirect(
+        url_for("auth.login")
+    )
