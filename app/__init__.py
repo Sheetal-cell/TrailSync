@@ -20,6 +20,7 @@ def create_app():
     login_manager.login_view = "auth.login"
     login_manager.login_message = "Please login to continue."
     login_manager.login_message_category = "warning"
+    login_manager.session_protection = "strong"
 
 
     @app.route("/")
