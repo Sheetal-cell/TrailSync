@@ -9,6 +9,7 @@ from flask_login import (
     logout_user,
     login_required
 )
+from flask import session
 from app.auth import auth_bp
 from app.auth.forms import (
     RegistrationForm,
@@ -191,10 +192,14 @@ def register():
 def logout():
 
     logout_user()
+
+    session.clear()
+
     flash(
         "Logged out successfully.",
         "success"
     )
+
     return redirect(
         url_for("auth.login")
     )
