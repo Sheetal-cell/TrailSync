@@ -14,3 +14,12 @@ class Config:
     "static",
     "uploads"
     )
+
+SESSION_COOKIE_HTTPONLY = True
+REMEMBER_COOKIE_HTTPONLY = True
+
+SESSION_COOKIE_SAMESITE = "Lax"
+
+REMEMBER_COOKIE_SAMESITE = "Lax"
+
+SESSION_COOKIE_SECURE = False
