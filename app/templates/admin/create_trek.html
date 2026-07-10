@@ -78,20 +78,26 @@ Create Trek
 ) }}
 </div>
 
-<div class="mb-3">
-    {{ form.gallery.label(class="form-label") }}
 
-{{ form.gallery(
-    class="form-control",
-    accept="image/*"
-) }}
+<div class="mb-3">
+
+    {{ form.image.label(class="form-label") }}
+
+    {{ form.image(
+        class="form-control",
+        accept="image/*"
+    ) }}
+
 </div>
 
 <div class="mb-3">
 
     {{ form.gallery.label(class="form-label") }}
 
-    {{ form.gallery(class="form-control") }}
+    {{ form.gallery(
+        class="form-control",
+        accept="image/*"
+    ) }}
 
     <small class="text-muted">
         Hold Ctrl (Windows) or Cmd (Mac) to select multiple images.
