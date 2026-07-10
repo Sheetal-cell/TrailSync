@@ -141,6 +141,12 @@ def book_trek(trek_id):
     trek.available_slots -= 1
 
     db.session.commit()
+    saved = Booking.query.filter_by(
+        user_id=current_user.id,
+        trek_id=trek.id
+    ).first()
+
+    print(saved)
 
     print("Booking saved successfully")
 
@@ -150,6 +156,8 @@ def book_trek(trek_id):
         "Trek booked successfully!",
         "success"
     )
+
+    print(db.engine.url)
 
 
 
