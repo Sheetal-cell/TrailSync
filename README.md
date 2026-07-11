@@ -100,6 +100,8 @@ The application should now be running successfully.
 The application supports three different user roles:
 
 - **Administrator**
+  (admin credentials: ```email="admin@trailsync.com",
+        password="admin123" ```)
   - Manage treks
   - Manage staff
   - View analytics
